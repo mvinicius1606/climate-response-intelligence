@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+
+# Notebooks
+.ipynb_checkpoints/
+
+# Configuração local e segredos
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+.aws/
+
+# Dados: manter apenas documentação e fixtures pequenas intencionais
+data/*
+!data/README.md
+!data/samples/
+data/samples/*
+!data/samples/.gitkeep
+
+# Arquivos locais/gerados pelo dbt
+dbt/target/
+dbt/logs/
+dbt/dbt_packages/
+dbt/profiles.yml
+
+# Artefatos da aplicação e do editor
+.streamlit/secrets.toml
+.DS_Store
+.idea/
+.vscode/
+*.log
