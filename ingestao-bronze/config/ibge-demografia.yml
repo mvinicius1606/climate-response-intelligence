@@ -1,0 +1,22 @@
+# Configuração descritiva; não existe executor nesta etapa.
+# validated confirma acesso e amostra, não certifica toda a cobertura nem a versão histórica.
+source:
+  id: "ibge-demografia"
+  name: "População por grupos de idade"
+  institution: "IBGE"
+  dataset_id: "9514"
+  roles: ["FEATURE ESTRUTURAL"]
+access:
+  type: "API"
+  method: "GET"
+  url: "https://apisidra.ibge.gov.br/values/t/9514/n6/in%20n3%2043/v/93/p/2022/c2/6794/c287/93070,93084,93085,93086,93087,93088,93089,93090,93091,93092,93093,93094,93095,93096,93097,93098,49108,49109,60040,60041,6653/c286/113635"
+  format: "JSON"
+  metadata_url: "https://apisidra.ibge.gov.br/DescritoresTabela/t/9514"
+scope:
+  state: "RS"
+  reference_year: "2022"
+granularity:
+  spatial: "município"
+  temporal: "referência censitária estática"
+identifiers: ["D1C", "D2C", "D3C", "D4C", "D5C", "D6C"]
+status: "validated"

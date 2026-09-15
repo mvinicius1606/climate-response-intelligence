@@ -1,0 +1,22 @@
+# Configuração descritiva; não existe executor nesta etapa.
+# validated confirma acesso e amostra, não certifica toda a cobertura nem a versão histórica.
+source:
+  id: "ibge-esgotamento"
+  name: "Domicílios por tipo de esgotamento sanitário"
+  institution: "IBGE"
+  dataset_id: "6805"
+  roles: ["FEATURE ESTRUTURAL"]
+access:
+  type: "API"
+  method: "GET"
+  url: "https://apisidra.ibge.gov.br/values/t/6805/n6/in%20n3%2043/v/381/p/2022/c11558/all"
+  format: "JSON"
+  metadata_url: "https://apisidra.ibge.gov.br/DescritoresTabela/t/6805"
+scope:
+  state: "RS"
+  reference_year: "2022"
+granularity:
+  spatial: "município"
+  temporal: "referência censitária estática"
+identifiers: ["D1C", "D2C", "D3C", "D4C"]
+status: "validated"

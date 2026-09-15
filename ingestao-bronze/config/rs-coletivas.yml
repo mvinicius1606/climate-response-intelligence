@@ -1,0 +1,25 @@
+# Dois documentos confirmados; não representa um inventário completo do período.
+# Cada PDF é uma única fonte física, mesmo quando atende a dois domínios.
+source:
+  id: "rs-coletivas"
+  name: "Coletivas sobre as enchentes de 9 e 10 de maio de 2024"
+  institution: "Governo RS / Secom; dados da Defesa Civil RS, DAER e PRF"
+  roles: ["GROUND TRUTH", "REFERÊNCIA", "LOGÍSTICA"]
+access:
+  type: "download direto"
+  method: "GET"
+  format: "PDF"
+  resources:
+    - id: "coletiva-2024-05-09"
+      url: "https://www.estado.rs.gov.br/upload/arquivos/202405/2024-05-09-govrs-coletiva-atualizacao-chuvas-medidas-v1.pdf"
+    - id: "coletiva-2024-05-10"
+      url: "https://www.estado.rs.gov.br/upload/arquivos/202405/2024-05-10-govrs-coletiva-site-saude-13-esc-tje-itcdm-v2.pdf"
+scope:
+  state: "RS"
+  start_date: "2024-04-27"
+  end_date: "2024-05-27"
+granularity:
+  spatial: "totais estaduais e trechos pontuais"
+  temporal: "por publicação, com horários de referência por seção"
+identifiers: ["URL do documento", "data da coletiva", "rodovia e km quando informados"]
+status: "validated"

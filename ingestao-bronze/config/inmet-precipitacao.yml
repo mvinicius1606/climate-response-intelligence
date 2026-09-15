@@ -1,0 +1,26 @@
+# O autor aceita as três lacunas A801 de 27/05/2024 às 09h, 10h e 11h UTC.
+# Preservar os bytes originais e campos vazios; não preencher, interpolar ou excluir linhas.
+# O ZIP é nacional. O padrão seleciona membros do RS para uma futura ingestão.
+# A validação de conteúdo cobriu somente A801; não comprova completude das 44 estações.
+source:
+  id: "inmet-precipitacao"
+  name: "Dados históricos anuais de estações automáticas — 2024"
+  institution: "INMET"
+  roles: ["FEATURE TEMPORAL"]
+access:
+  type: "download direto"
+  method: "GET"
+  url: "https://portal.inmet.gov.br/uploads/dadoshistoricos/2024.zip"
+  format: "ZIP"
+  member_format: "CSV"
+  member_pattern: "INMET_S_RS_*.CSV"
+scope:
+  state: "RS"
+  archive_year: "2024"
+  start_date: "2024-04-27"
+  end_date: "2024-05-27"
+granularity:
+  spatial: "estação"
+  temporal: "horária"
+identifiers: ["CODIGO (WMO)", "Data", "Hora UTC"]
+status: "validated"
