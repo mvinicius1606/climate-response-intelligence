@@ -19,6 +19,7 @@ venv/
 *.pem
 *.key
 .aws/
+aws credentials
 
 # Dados: manter apenas documentação e fixtures pequenas intencionais
 data/*
@@ -39,3 +40,4 @@ dbt/profiles.yml
 .idea/
 .vscode/
 *.log
+

@@ -35,7 +35,7 @@ A seleção não afirma que os quatro domínios já oferecem cobertura suficient
 
 ### Alternativas consideradas
 
-- ANA/HidroWebService: documentação e estações identificadas, mas acesso a inventário retornou 401; séries do evento não confirmadas. Permanece pendência, sem seleção definitiva ou YAML.
+- ANA/HidroWebService: documentação e estações identificadas, mas acesso a inventário retornou 401 pois precisa de autorização de acesso da API, tendo que ser realizada pelo Autor posteriormente das outras fontes.
 - S2ID: relatórios e filtros oficiais localizados; export municipal e schema não validados. Permanece pendência.
 - Boletins HTML e mapas de rodovias: resultados indexados não bastam; houve 404 em acessos diretos e não foi demonstrado histórico dos mapas.
 - Rendimento do Censo divulgado em 2025: excluído do recorte de informação disponível em abril/maio de 2024.
