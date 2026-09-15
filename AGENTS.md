@@ -2,39 +2,253 @@
 
 ## 1. Finalidade
 
-Este arquivo define as regras globais de desenvolvimento, documentação, organização, manutenção e trabalho assistido por agentes no projeto **Climate Response Intelligence**.
+Este arquivo define as regras globais de desenvolvimento, documentação, validação e trabalho assistido por agentes no projeto **Climate Response Intelligence**.
 
-As instruções deste arquivo se aplicam a todo o repositório.
+As regras deste arquivo se aplicam a todo o repositório.
 
-Cada uma das quatro etapas principais do projeto possui também um `AGENTS.md` próprio, responsável por complementar estas regras com orientações específicas daquela etapa.
+O projeto deve ser desenvolvido em **pequenas unidades de trabalho**, iniciadas por um **Prompt Inicial**.
 
-A hierarquia conceitual de instruções é:
+O `AGENTS.md` não define qual será a próxima tarefa.
+
+Ele define:
+
+> **como uma tarefa autorizada deve ser executada.**
+
+As etapas do projeto podem possuir `AGENTS.md` próprios para complementar estas regras com instruções técnicas específicas.
+
+A hierarquia de contexto é:
 
 ```text
-Prompt atual
+Prompt Inicial
 ↓
-AGENTS.md da raiz
+AGENTS.md raiz
 ↓
 AGENTS.md da etapa
 ↓
-STATUS.md da etapa
+STATUS.md
 ↓
-documentação da etapa
+documentação necessária
 ↓
 código existente
 ↓
-histórico e decisões
+decisões e histórico
 ```
-
-O agente deve compreender o estado atual antes de realizar alterações.
 
 ---
 
-# 2. Idioma do projeto
+# 2. Filosofia de trabalho
+
+O desenvolvimento deve seguir:
+
+```text
+entender
+↓
+executar uma ação limitada
+↓
+validar
+↓
+compreender
+↓
+documentar
+↓
+atualizar o estado
+↓
+definir a próxima ação
+```
+
+O agente não deve transformar uma tarefa limitada em uma expansão geral do projeto.
+
+A próxima ação pertence ao autor, salvo quando o próprio Prompt Inicial conceder autonomia explícita.
+
+---
+
+# 3. Prompt Inicial
+
+O **Prompt Inicial** é o gatilhador de cada unidade de trabalho.
+
+Ele deve definir, quando aplicável:
+
+```text
+AÇÃO
+
+OBJETIVO
+
+CONTEXTO
+
+DOCUMENTAÇÃO EXISTENTE
+
+FONTES OU SITES A CONSULTAR
+
+ESCOPO
+
+AUTONOMIA AUTORIZADA
+
+O QUE NÃO FAZER
+
+ENTREGÁVEIS
+
+VALIDAÇÕES
+
+DOCUMENTAÇÃO DA AÇÃO
+
+CRITÉRIO DE CONCLUSÃO
+```
+
+Nem todos os campos precisam existir em tarefas simples.
+
+A profundidade do prompt deve acompanhar a complexidade da ação.
+
+O Prompt Inicial é a autoridade da tarefa atual quanto a:
+
+* objetivo;
+* escopo;
+* restrições;
+* autonomia;
+* entregáveis;
+* validações;
+* critério de conclusão.
+
+Ele não substitui regras permanentes de segurança, integridade e qualidade definidas nos `AGENTS.md`.
+
+---
+
+# 4. Escopo
+
+O agente deve permanecer dentro do escopo autorizado.
+
+Não utilizar uma tarefa pequena como oportunidade para:
+
+* alterar arquitetura global;
+* reorganizar componentes não relacionados;
+* adicionar ferramentas;
+* trocar bibliotecas;
+* substituir tecnologias;
+* expandir funcionalidades;
+* implementar etapas futuras;
+* refatorar código sem necessidade;
+* modificar decisões já validadas.
+
+Melhorias fora do escopo devem ser apresentadas como recomendação, não implementadas automaticamente.
+
+---
+
+# 5. Autonomia
+
+A autonomia do agente deve ser determinada pelo Prompt Inicial.
+
+Exemplos de níveis possíveis:
+
+### Autonomia restrita
+
+O agente executa decisões já definidas.
+
+Mudanças arquiteturais ou estruturais devem apenas ser relatadas.
+
+### Autonomia técnica limitada
+
+O agente pode decidir detalhes internos da implementação, desde que preserve:
+
+* arquitetura;
+* contratos;
+* escopo;
+* comportamento esperado.
+
+### Autonomia investigativa
+
+O agente pode:
+
+* pesquisar;
+* comparar alternativas;
+* recomendar soluções;
+* justificar tecnicamente.
+
+A decisão ainda precisa ser validada conforme o Prompt Inicial.
+
+### Autonomia ampliada
+
+Somente existe quando declarada explicitamente.
+
+O agente nunca deve presumir autonomia ampliada.
+
+---
+
+# 6. Mudanças que exigem autorização explícita
+
+Sem autorização clara, o agente não deve:
+
+* substituir arquitetura existente;
+* trocar tecnologias principais;
+* alterar contratos entre etapas;
+* adicionar fontes ao escopo;
+* remover componentes concluídos;
+* realizar mudanças destrutivas;
+* alterar regras de negócio;
+* alterar targets ou critérios de Machine Learning;
+* substituir modelos;
+* apagar histórico;
+* expandir o projeto para além da ação atual.
+
+Caso essa necessidade apareça, deve ser relatada.
+
+---
+
+# 7. Modo de aprendizagem
+
+Este projeto utiliza agentes para reduzir trabalho operacional e repetitivo, não para substituir a compreensão do autor.
+
+As tarefas devem ser divididas em unidades suficientemente pequenas para que o autor consiga:
+
+* revisar;
+* compreender;
+* questionar;
+* testar;
+* explicar;
+
+antes de avançar.
+
+O agente não deve antecipar etapas futuras apenas porque parecem relacionadas.
+
+Ao concluir uma implementação relevante, deve ser capaz de explicar:
+
+* quais arquivos foram alterados;
+* responsabilidade de cada componente;
+* fluxo implementado;
+* entradas e saídas;
+* decisões técnicas;
+* validações realizadas;
+* limitações existentes.
+
+---
+
+# 8. Não avançar implicitamente
+
+Concluir uma ação não autoriza automaticamente a próxima.
+
+Exemplo:
+
+```text
+Implementar ingestão IBGE
+```
+
+não autoriza:
+
+```text
+implementar ANA
++
+criar Silver
++
+implementar Gold
+```
+
+A próxima unidade de trabalho exige novo Prompt Inicial, salvo autorização explícita.
+
+---
+
+# 9. Idioma
 
 O projeto deve ser desenvolvido prioritariamente em **português brasileiro**.
 
-Devem permanecer em inglês os termos técnicos, ferramentas, comandos e conceitos cujo uso em inglês seja padrão no contexto profissional.
+Termos técnicos, ferramentas e conceitos normalmente utilizados em inglês devem permanecer em inglês.
 
 Exemplos:
 
@@ -42,93 +256,83 @@ Exemplos:
 * SQL;
 * dbt;
 * Docker;
-* GitHub Actions;
 * Machine Learning;
 * Data Quality;
 * Data Lineage;
-* Data Lake;
 * Bronze;
 * Silver;
 * Gold;
 * staging;
-* models;
 * tests;
 * features;
-* scoring;
 * API;
 * endpoint;
-* commit;
-* pull request.
+* logging;
+* storage;
+* manifest;
+* checksum;
+* retry.
 
-Não traduzir termos técnicos apenas para manter uniformidade linguística.
-
-A prioridade é utilizar a forma mais natural e reconhecida no mercado brasileiro.
+Priorizar naturalidade e uso profissional.
 
 ---
 
-# 3. Estilo de escrita e documentação
+# 10. Estilo de documentação
 
-A documentação deve seguir uma estrutura próxima à utilizada em trabalhos acadêmicos e relatórios técnicos.
+A documentação deve possuir estilo próximo a:
 
-A linguagem deve ser:
+* trabalhos acadêmicos;
+* relatórios técnicos;
+* documentação profissional.
+
+A escrita deve ser:
 
 * formal;
 * natural;
 * clara;
 * objetiva;
 * explicativa;
-* profissional;
-* agradável de ler.
+* tecnicamente justificável.
 
-Evitar linguagem excessivamente complexa ou artificial.
+Quando relevante, explicar:
 
-O texto deve utilizar conectivos e apresentar continuidade lógica entre os assuntos.
+1. contexto;
+2. problema;
+3. objetivo;
+4. solução;
+5. funcionamento;
+6. motivo da escolha;
+7. validação;
+8. limitações;
+9. possíveis evoluções.
 
-Sempre que relevante, explicar:
+Evitar:
 
-1. o contexto;
-2. o problema;
-3. a solução adotada;
-4. como a solução funciona;
-5. por que essa solução foi escolhida;
-6. suas limitações;
-7. possíveis evoluções.
-
-Evitar documentação composta somente por listas desconectadas.
+* linguagem artificial;
+* repetições;
+* excesso de jargões;
+* listas desconectadas;
+* documentação criada apenas por formalidade.
 
 ---
 
-# 4. Estrutura da documentação
+# 11. Estrutura da documentação
 
-Os documentos devem ser organizados por tópicos e subtópicos hierárquicos.
-
-Exemplo:
-
-```text
-1. Assunto principal
-
-1.1. Contexto
-
-1.2. Arquitetura
-
-1.3. Implementação
-
-1.4. Decisões
-
-1.5. Limitações
-```
+Documentos devem utilizar hierarquia clara de títulos e subtítulos.
 
 Documentos extensos devem possuir **sumário**.
 
-Documentos pequenos não precisam possuir sumário apenas para cumprir formalidade.
+Documentos pequenos não precisam de sumário apenas por formalidade.
 
-A profundidade da estrutura deve acompanhar a complexidade real do assunto.
+Não criar arquivos vazios para completar uma estrutura idealizada.
+
+Detalhes específicos de uma etapa devem permanecer na documentação daquela etapa.
 
 ---
 
-# 5. Estrutura global do projeto
+# 12. Estrutura global
 
-O projeto é dividido em quatro etapas principais.
+O projeto possui quatro etapas principais:
 
 ```text
 climate-response-intelligence/
@@ -142,740 +346,410 @@ climate-response-intelligence/
 ├── README.md
 ├── CHANGELOG.md
 ├── AGENTS.md
-├── ROADMAP.md
 └── demais arquivos globais
 ```
 
-Cada etapa possui sua própria pasta mãe e deve concentrar os componentes relacionados àquela responsabilidade.
-
-A pasta `testes/` da raiz possui responsabilidade transversal e não representa uma quinta etapa do pipeline.
-
----
-
-# 6. As quatro etapas
-
-## 6.1. `ingestao-bronze/`
-
-Responsável por:
-
-* obtenção dos dados externos;
-* integração com fontes;
-* metadata;
-* checksum;
-* Data Lineage inicial;
-* rastreabilidade;
-* armazenamento na camada Bronze.
-
----
-
-## 6.2. `etl-silver/`
-
-Responsável por:
-
-* transformação;
-* tipagem;
-* padronização;
-* integração entre fontes;
-* Data Quality;
-* validações;
-* modelagem dos dados confiáveis;
-* processamento dbt quando aplicável.
-
----
-
-## 6.3. `inteligencia-gold/`
-
-Responsável por:
-
-* indicadores;
-* feature engineering;
-* scoring;
-* algoritmos;
-* modelos analíticos;
-* Machine Learning;
-* Decision Intelligence;
-* explicabilidade.
-
----
-
-## 6.4. `app/`
-
-Responsável pela apresentação e interação com o usuário.
-
-A aplicação não deve concentrar regras de negócio pertencentes às outras camadas.
-
----
-
-# 7. Estrutura mínima de cada etapa
-
-Cada pasta mãe deve possuir, quando aplicável:
+Responsabilidades gerais:
 
 ```text
-etapa/
-│
-├── AGENTS.md
-├── STATUS.md
-│
-├── docs/
-│   ├── decisoes.md
-│   ├── testes.md
-│   └── demais documentações
-│
-├── tests/
-│
-└── implementação da etapa
+ingestao-bronze/
+→ aquisição e preservação dos dados
+
+etl-silver/
+→ transformação, conformação e Data Quality
+
+inteligencia-gold/
+→ indicadores, algoritmos, ML e Decision Intelligence
+
+app/
+→ apresentação e interação
 ```
 
-Os arquivos e diretórios possuem responsabilidades diferentes.
+Regras técnicas específicas pertencem aos `AGENTS.md` dessas etapas.
 
 ---
 
-# 8. Papel do `AGENTS.md`
+# 13. AGENTS locais
 
-O `AGENTS.md` define:
+Os `AGENTS.md` locais complementam este arquivo.
 
-> Como o agente deve trabalhar.
+Eles devem conter somente regras específicas daquela etapa.
 
-O `AGENTS.md` raiz contém as regras globais.
-
-O `AGENTS.md` de cada etapa contém somente regras específicas daquela área.
-
-Exemplos:
-
-```text
-ingestao-bronze/AGENTS.md
-→ regras de ingestão
-
-etl-silver/AGENTS.md
-→ regras de dbt e Data Quality
-
-inteligencia-gold/AGENTS.md
-→ regras de scoring, algoritmos e ML
-
-app/AGENTS.md
-→ regras da interface
-```
-
-Evitar copiar todo o conteúdo do `AGENTS.md` raiz para os arquivos locais.
-
-Os arquivos locais devem complementar as regras gerais.
-
----
-
-# 9. Papel do `STATUS.md`
-
-O `STATUS.md` representa:
-
-> Qual é o estado atual da etapa.
-
-Ele deve indicar claramente:
-
-* componentes concluídos;
-* componentes em desenvolvimento;
-* componentes pendentes;
-* componentes planejados;
-* data da última atualização;
-* data da última validação relevante.
+Não repetir integralmente as regras globais.
 
 Exemplo:
-
-```text
-# Status da Ingestão Bronze
-
-Status geral: EM DESENVOLVIMENTO
-
-Última atualização: 12/09/2026 16:40
-Última validação: 12/09/2026 16:30
-
-## Componentes
-
-Arquitetura base — CONCLUÍDA
-Loader YAML — CONCLUÍDO
-Metadata — CONCLUÍDO
-Storage S3 — CONCLUÍDO
-IBGE População — CONCLUÍDO
-IBGE Renda — PENDENTE
-Defesa Civil — PENDENTE
-```
-
-O `STATUS.md` não é histórico.
-
-Ele deve representar somente o estado atual.
-
----
-
-# 10. Componentes concluídos
-
-Componentes marcados como:
-
-```text
-CONCLUÍDO
-```
-
-não devem ser reconstruídos sem necessidade.
-
-Antes de alterar um componente concluído, o agente deve:
-
-1. verificar o motivo da alteração;
-2. inspecionar a implementação existente;
-3. preservar as partes funcionais;
-4. realizar alterações incrementais;
-5. documentar a justificativa.
-
-`CONCLUÍDO` significa:
-
-> Não reconstruir.
-
-Não significa:
-
-> Nunca modificar.
-
-Exemplo:
-
-Se a arquitetura Bronze estiver concluída e uma nova fonte precisar ser adicionada, o agente deve utilizar a arquitetura existente em vez de reconstruí-la.
-
----
-
-# 11. Papel de `docs/decisoes.md`
-
-Cada etapa deve possuir:
-
-```text
-docs/decisoes.md
-```
-
-Esse documento responde:
-
-> O que foi decidido, para quê e por quê?
-
-Toda ação relevante realizada naquela etapa deve gerar uma entrada em `decisoes.md`.
-
-Isso permite compreender não apenas o estado final do projeto, mas também o raciocínio por trás de sua construção.
-
-Cada registro deve informar, quando aplicável:
-
-* data;
-* ação realizada;
-* decisão tomada;
-* problema ou necessidade;
-* solução escolhida;
-* motivo da escolha;
-* alternativas consideradas;
-* impacto esperado;
-* possíveis limitações.
-
-Exemplo:
-
-```markdown
-## Uso de configuração YAML por fonte
-
-**Data:** 12/09/2026
-
-### Contexto
-
-A ingestão utilizará aproximadamente cinco fontes públicas diferentes.
-
-### Decisão
-
-Cada fonte possuirá seu próprio arquivo YAML de configuração.
-
-### Motivo
-
-A separação permite adicionar novas fontes sem modificar o núcleo do serviço de ingestão.
-
-### Alternativas consideradas
-
-Manter todas as fontes dentro de um único arquivo Python.
-
-### Motivo da rejeição
-
-Essa abordagem aumentaria o acoplamento e repetiria um problema observado anteriormente em projetos com arquivos de ingestão extensos.
-```
-
----
-
-# 12. Decisões de continuidade
-
-Nem toda ação exige uma nova arquitetura.
-
-Mesmo assim, se uma ação relevante mantiver uma decisão anterior, registrar brevemente essa continuidade.
-
-Exemplo:
-
-```markdown
-## Inclusão da fonte Defesa Civil
-
-**Data:** 13/09/2026
-
-A nova fonte foi integrada utilizando a arquitetura declarativa existente.
-
-Não foi necessária alteração estrutural no serviço de ingestão.
-
-A decisão foi manter o padrão atual por já atender adequadamente ao novo dataset.
-```
-
-Dessa forma, `decisoes.md` também demonstra que a ausência de mudança arquitetural foi uma escolha consciente.
-
----
-
-# 13. Papel do `CHANGELOG.md`
-
-O `CHANGELOG.md` localizado na raiz representa:
-
-> O que mudou no projeto ao longo do tempo.
-
-Ele possui escopo global.
-
-Cada ação relevante no projeto deve gerar uma entrada contendo:
-
-* título;
-* data;
-* hora;
-* descrição da mudança.
-
-Exemplo:
-
-```markdown
-## Implementação da ingestão IBGE População
-
-**Data:** 12/09/2026  
-**Hora:** 17:15
-
-Foi implementada a primeira fonte oficial da camada Bronze utilizando configuração YAML, extração HTTP, geração de metadata e armazenamento no Amazon S3.
-
-Também foram atualizados os testes, documentação da ingestão, STATUS da etapa e README principal.
-```
-
----
-
-# 14. Diferença entre STATUS, DECISÕES e CHANGELOG
-
-Esses arquivos não devem ser tratados como equivalentes.
-
-```text
-STATUS.md
-→ onde estamos agora
-
-docs/decisoes.md
-→ por que estamos fazendo dessa forma
-
-CHANGELOG.md
-→ o que mudou ao longo do tempo
-```
-
-Exemplo:
-
-```text
-STATUS:
-IBGE População — CONCLUÍDO
-
-DECISÕES:
-A fonte IBGE foi integrada utilizando configuração YAML porque...
-
-CHANGELOG:
-12/09/2026 17:15 — Implementada ingestão IBGE População.
-```
-
----
-
-# 15. Fluxo obrigatório de leitura para agentes
-
-Antes de executar uma tarefa, o agente deve seguir esta sequência.
-
-## 15.1. Entender o pedido
-
-Ler o prompt atual e identificar:
-
-* objetivo;
-* etapa envolvida;
-* escopo;
-* restrições;
-* critério de conclusão.
-
----
-
-## 15.2. Ler as regras globais
-
-Consultar:
 
 ```text
 /AGENTS.md
+→ método global de trabalho
+
+ingestao-bronze/AGENTS.md
+→ regras da Bronze
+
+etl-silver/AGENTS.md
+→ regras da Silver
+
+inteligencia-gold/AGENTS.md
+→ regras da Gold
+
+app/AGENTS.md
+→ regras do App
 ```
 
 ---
 
-## 15.3. Identificar a etapa responsável
+# 14. STATUS.md
+
+Cada etapa deve possuir, quando aplicável:
+
+```text
+STATUS.md
+```
+
+Ele representa:
+
+> **onde estamos agora.**
+
+Não é histórico.
+
+Estados recomendados:
+
+```text
+CONCLUÍDO
+EM DESENVOLVIMENTO
+PENDENTE
+PLANEJADO
+```
+
+O `STATUS.md` deve informar apenas o estado real.
+
+Arquivo existente ou placeholder não significa funcionalidade implementada.
+
+---
+
+# 15. Componentes concluídos
+
+`CONCLUÍDO` significa:
+
+> implementado e validado conforme os critérios existentes naquele momento.
+
+Não significa:
+
+> nunca modificar.
+
+Componentes concluídos não devem ser reconstruídos sem necessidade explícita.
+
+Quando uma alteração for autorizada:
+
+1. inspecionar implementação existente;
+2. preservar partes funcionais;
+3. verificar contratos;
+4. realizar mudança incremental;
+5. validar novamente.
+
+---
+
+# 16. Atualização do STATUS
+
+Atualizar `STATUS.md` quando uma ação validada mudar efetivamente o estado de um componente.
 
 Exemplo:
 
 ```text
-ingestão
-→ ingestao-bronze/
-
-transformação
-→ etl-silver/
-
-inteligência
-→ inteligencia-gold/
-
-interface
-→ app/
+Extractor IBGE — EM DESENVOLVIMENTO
 ```
 
----
-
-## 15.4. Ler as regras locais
-
-Consultar:
+após validação:
 
 ```text
-etapa/AGENTS.md
+Extractor IBGE — CONCLUÍDO
 ```
 
-antes de modificar arquivos da etapa.
+Pesquisa exploratória sem mudança real não exige alteração automática de status.
 
 ---
 
-## 15.5. Consultar o estado atual
+# 17. docs/decisoes.md
 
-Ler:
+Cada etapa deve possuir, quando necessário:
 
 ```text
-etapa/STATUS.md
+docs/decisoes.md
 ```
 
-e identificar:
+O documento registra decisões técnicas, arquiteturais ou de modelagem realmente adotadas.
 
-* o que já está concluído;
-* o que está em andamento;
-* o que ainda está pendente.
+Ele deve responder:
 
-Não reconstruir componentes concluídos sem necessidade.
+> O que foi decidido, por que, quais áreas foram afetadas e como foi validado?
 
----
-
-## 15.6. Consultar documentação relevante
-
-Ler somente os documentos necessários para compreender a tarefa.
-
-Evitar carregar documentação não relacionada sem necessidade.
+Não utilizar `decisoes.md` como diário de toda alteração pequena.
 
 ---
 
-## 15.7. Inspecionar o código existente
+# 18. Registro após validação
 
-O agente deve verificar a implementação real antes de escrever código novo.
-
-O código executável representa a **verdade operacional** do sistema.
-
-Quando documentação e código divergirem, investigar a divergência antes de assumir qual está correto.
-
----
-
-## 15.8. Consultar decisões anteriores
-
-Antes de realizar mudanças arquiteturais ou estruturais, consultar:
+A ordem preferencial é:
 
 ```text
-etapa/docs/decisoes.md
+ação
+↓
+implementação ou análise
+↓
+validação
+↓
+decisão confirmada
+↓
+registro em decisoes.md
 ```
 
-para evitar contradizer decisões anteriores sem necessidade.
+Hipóteses e experimentos ainda não validados não devem ser apresentados como decisões definitivas.
+
+Alternativas rejeitadas podem ser mencionadas quando relevantes.
 
 ---
 
-## 15.9. Consultar o CHANGELOG quando necessário
+# 19. Estrutura das decisões
 
-O `CHANGELOG.md` deve ser utilizado para compreender:
+Cada decisão deve registrar, quando aplicável:
 
-* evolução histórica;
-* momento em que componentes foram adicionados;
-* grandes alterações anteriores.
+```markdown
+## Título
 
-Ele não deve ser utilizado como única fonte para determinar o estado atual.
+**Data:** DD/MM/AAAA
+**Status:** Validada
+**Origem:** ...
+**Prompt relacionado:** ...
+
+### Contexto
+
+### O que foi feito
+
+### Por que foi feito
+
+### Decisão adotada
+
+### Áreas afetadas
+
+### Validação
+
+### Alternativas consideradas
+
+### Limitações
+
+### Responsabilidade da decisão
+```
+
+Campos irrelevantes podem ser omitidos.
 
 ---
 
-# 16. Fluxo obrigatório de execução
+# 20. Origem da decisão
 
-Após compreender o contexto, o agente deve:
+Utilizar uma das categorias:
 
 ```text
-entender
-↓
-inspecionar
-↓
-implementar
-↓
-testar
-↓
-validar
-↓
-documentar
-↓
-atualizar status
-↓
-registrar decisão
-↓
-atualizar README
-↓
-atualizar CHANGELOG
+AUTOR
 ```
 
----
-
-# 17. Fluxo obrigatório de atualização
-
-Ao concluir uma ação relevante, verificar nesta ordem:
-
-## 17.1. Código
-
-A implementação foi realizada corretamente?
-
----
-
-## 17.2. Testes
-
-Os testes relevantes foram executados?
-
----
-
-## 17.3. Documentação local
-
-A documentação da etapa continua correta?
-
----
-
-## 17.4. STATUS
-
-O estado atual mudou?
-
-Se sim:
+Decisão definida pelo autor.
 
 ```text
-etapa/STATUS.md
+AUTOR + AGENTE
 ```
 
-deve ser atualizado.
-
----
-
-## 17.5. Decisões
-
-Registrar a ação e o raciocínio correspondente em:
+Decisão construída conjuntamente.
 
 ```text
-etapa/docs/decisoes.md
+AGENTE, APROVADO PELO AUTOR
 ```
 
----
+O agente investigou ou propôs a solução dentro da autonomia concedida, posteriormente validada pelo autor.
 
-## 17.6. README raiz
-
-Verificar obrigatoriamente se:
-
-```text
-README.md
-```
-
-precisa ser atualizado.
+O objetivo é transparência sobre o processo de desenvolvimento.
 
 ---
 
-## 17.7. CHANGELOG
+# 21. Documentação específica da ação
 
-Registrar a mudança relevante no:
+O Prompt Inicial pode determinar criação ou atualização de documentos específicos.
 
-```text
-CHANGELOG.md
-```
+Exemplos:
 
----
+* `fontes-de-dados.md`;
+* `arquitetura.md`;
+* `ingestao.md`;
+* `metadata-lineage.md`;
+* `testes.md`;
+* `modelo-de-dados.md`;
+* `features.md`.
 
-# 18. README raiz
-
-O `README.md` raiz é a **porta de entrada do projeto**.
-
-Ele deve funcionar como:
-
-* apresentação;
-* resumo;
-* visão executiva;
-* índice de navegação.
-
-O README não deve conter toda a documentação técnica.
-
-Ele deve apresentar resumidamente:
-
-1. problema;
-2. proposta;
-3. arquitetura;
-4. etapas;
-5. estado atual;
-6. tecnologias principais;
-7. resultados;
-8. links para documentação detalhada.
+Se a ação deixar documentação existente incorreta, atualizar somente os documentos realmente afetados.
 
 ---
 
-# 19. README como mapa documental
+# 22. README.md
 
-O README deve possuir links diretos para as documentações principais.
+O README é a porta de entrada do projeto.
 
-Exemplo:
+Deve apresentar de forma resumida:
 
-```text
-README
-│
-├── Bronze
-│   └── ingestao-bronze/docs/
-│
-├── Silver
-│   └── etl-silver/docs/
-│
-├── Gold
-│   └── inteligencia-gold/docs/
-│
-└── Aplicação
-    └── app/docs/
-```
-
-O leitor deve conseguir começar pelo README e aprofundar progressivamente o conhecimento.
-
----
-
-# 20. Sincronização obrigatória do README
-
-Sempre que uma documentação relevante for:
-
-* criada;
-* removida;
-* renomeada;
-* reorganizada;
-* significativamente alterada;
-
-verificar se o README raiz precisa ser atualizado.
-
-Também atualizar o README quando houver mudança relevante em:
-
+* problema;
+* objetivo;
 * arquitetura;
-* status;
-* funcionalidades;
-* resultados;
-* escopo;
-* nomenclatura;
-* etapas.
+* etapas;
+* estado de alto nível;
+* tecnologias;
+* resultados relevantes;
+* links para documentação.
 
-Não deixar o README representar uma versão antiga do projeto.
+Não deve conter toda a documentação técnica.
 
 ---
 
-# 21. Estado real versus planejamento
+# 23. Atualização do README
+
+Não atualizar o README a cada microação.
+
+Atualizar quando houver mudança relevante, como:
+
+* conclusão de parte significativa;
+* novo fluxo ponta a ponta;
+* nova fonte principal concluída;
+* mudança arquitetural;
+* mudança de escopo;
+* novo resultado;
+* milestone.
+
+Ajustes internos pequenos normalmente não exigem atualização.
+
+---
+
+# 24. CHANGELOG.md
+
+O `CHANGELOG.md` registra evolução relevante do projeto.
+
+Não registrar cada pequena edição.
+
+Registrar principalmente:
+
+* conclusão de componentes importantes;
+* milestones;
+* mudanças arquiteturais;
+* novas funcionalidades relevantes;
+* mudanças importantes de contrato;
+* alterações significativas de escopo.
+
+---
+
+# 25. Estado real versus planejamento
 
 Diferenciar claramente:
 
 ```text
-✅ Implementado
-🚧 Em desenvolvimento
-📋 Planejado
-🔮 Futuro
+IMPLEMENTADO
+EM DESENVOLVIMENTO
+PLANEJADO
+FUTURO
 ```
 
-Nunca apresentar como implementado algo que existe somente no planejamento.
-
-A documentação deve refletir o estado real do projeto.
+Nunca apresentar planejamento, documentação ou placeholder como funcionalidade implementada.
 
 ---
 
-# 22. Preservação do trabalho existente
+# 26. Fonte da verdade
 
-Antes de modificar qualquer componente:
+A compreensão correta do estado considera:
 
-1. inspecionar arquivos existentes;
-2. verificar `STATUS.md`;
-3. consultar decisões anteriores;
-4. identificar componentes funcionais;
-5. preservar soluções válidas.
+```text
+Prompt Inicial
++
+AGENTS
++
+STATUS
++
+documentação
++
+código
++
+testes
++
+decisões
++
+histórico
+```
 
-Não reescrever componentes inteiros apenas porque outra solução parece mais elegante.
+Para comportamento executável, o código representa a verdade operacional.
 
-Refatorações devem possuir necessidade concreta.
-
----
-
-# 23. Escopo das tarefas
-
-O agente deve permanecer dentro do escopo solicitado.
-
-Não utilizar uma tarefa pequena como oportunidade para:
-
-* reorganizar outras pastas;
-* alterar arquitetura global;
-* adicionar ferramentas;
-* trocar bibliotecas;
-* refatorar componentes não relacionados.
-
-Melhorias adicionais podem ser registradas como recomendação ou pendência.
+Se houver divergência, investigar e reconciliar.
 
 ---
 
-# 24. Dependências
+# 27. Preservação do trabalho existente
 
-Não adicionar uma nova biblioteca, framework, serviço ou ferramenta sem necessidade concreta.
+Antes de alterar código:
 
-Antes de adicionar dependências:
+1. inspecionar arquivos relacionados;
+2. consultar STATUS;
+3. consultar documentação necessária;
+4. verificar decisões relevantes;
+5. identificar componentes funcionais;
+6. preservar soluções válidas.
 
-1. verificar se já existe solução no projeto;
-2. verificar se Python ou ferramenta atual já atende;
-3. avaliar impacto;
-4. justificar a decisão em `decisoes.md`.
+Não refatorar apenas por preferência estética.
 
 ---
 
-# 25. Simplicidade arquitetural
+# 28. Simplicidade
 
-Quando houver múltiplas soluções possíveis, priorizar nesta ordem:
+Priorizar:
 
 1. correção;
 2. clareza;
 3. manutenção;
 4. testabilidade;
 5. simplicidade;
-6. performance quando necessária;
-7. sofisticação arquitetural.
+6. rastreabilidade;
+7. performance quando necessária;
+8. sofisticação.
 
 Evitar overengineering.
 
+A tecnologia deve seguir a necessidade.
+
 ---
 
-# 26. Separação de responsabilidades
+# 29. Separação de responsabilidades
 
 Código deve possuir responsabilidades claras.
 
 Evitar:
 
 * arquivos excessivamente grandes;
-* classes responsáveis por muitas funções independentes;
-* repetição significativa;
-* forte acoplamento entre componentes.
+* classes com múltiplas funções independentes;
+* duplicação;
+* acoplamento excessivo;
+* acesso externo misturado com regra de negócio;
+* configuração espalhada.
 
-Quando um arquivo crescer significativamente, avaliar se existem responsabilidades distintas que justificam refatoração.
+Modularização não significa fragmentar código sem motivo.
 
 ---
 
-# 27. Testabilidade
+# 30. Testabilidade
 
-Código novo deve ser criado de forma testável.
+Sempre que possível separar:
 
-Sempre que possível, separar:
+```text
+acesso externo
+configuração
+transformação
+regra de negócio
+storage
+orquestração
+```
 
-* acesso externo;
-* regras de negócio;
-* transformação;
-* armazenamento;
-* configuração.
-
-Evitar funções que dependam simultaneamente de:
+Evitar componentes que dependam simultaneamente de:
 
 ```text
 API real
@@ -891,29 +765,9 @@ quando essas dependências puderem ser isoladas.
 
 ---
 
-# 28. Estratégia global de testes
+# 31. Testes
 
-Os testes devem acompanhar a responsabilidade do componente testado.
-
-A estratégia adotada é híbrida:
-
-```text
-testes específicos
-→ permanecem dentro da própria etapa
-
-testes transversais
-→ permanecem na pasta /testes da raiz
-```
-
-O objetivo é preservar a propriedade dos testes locais sem perder a visão sistêmica do projeto.
-
----
-
-# 29. Testes específicos de cada etapa
-
-Cada uma das quatro etapas deve possuir uma pasta de testes própria quando houver código ou comportamento testável.
-
-Exemplos:
+Testes específicos devem permanecer próximos da etapa responsável:
 
 ```text
 ingestao-bronze/tests/
@@ -922,318 +776,60 @@ inteligencia-gold/tests/
 app/tests/
 ```
 
-Esses diretórios devem conter a implementação real dos testes específicos daquela etapa.
-
-Exemplos:
-
-### Bronze
-
-* carregamento de configuração;
-* validação YAML;
-* extractors;
-* checksum;
-* metadata;
-* storage;
-* orquestração da ingestão.
-
-### Silver
-
-* testes dbt;
-* `not_null`;
-* `unique`;
-* `relationships`;
-* `accepted_values`;
-* testes customizados de Data Quality;
-* regras de negócio da camada Silver.
-
-### Gold
-
-* feature engineering;
-* scoring;
-* regras determinísticas;
-* métricas;
-* algoritmos;
-* Machine Learning quando implementado.
-
-### App
-
-* apresentação;
-* contratos de entrada;
-* integração com serviços;
-* comportamento da interface quando aplicável.
-
----
-
-# 30. Documentação de testes por etapa
-
-Cada etapa deve possuir:
-
-```text
-docs/testes.md
-```
-
-Esse arquivo deve explicar de forma detalhada a estratégia de testes daquela etapa.
-
-Quando relevante, documentar:
-
-* objetivo dos testes;
-* componentes cobertos;
-* tipos de testes;
-* cenários validados;
-* casos de falha;
-* mocks ou fixtures;
-* critérios de aprovação;
-* limitações;
-* dependências externas;
-* resultados relevantes;
-* data da última validação.
-
-Não utilizar `docs/testes.md` como substituto da implementação dos testes.
-
-Ele documenta a estratégia e os resultados; os testes reais permanecem em `tests/`.
-
----
-
-# 31. Papel da pasta `/testes` da raiz
-
-A pasta:
+Testes transversais podem permanecer em:
 
 ```text
 /testes
 ```
 
-não deve ser utilizada como depósito central de todos os testes do projeto.
+para casos como:
 
-Ela é reservada principalmente para testes que atravessam mais de uma etapa.
+* contratos;
+* integração entre etapas;
+* end-to-end.
 
-Estrutura conceitual:
-
-```text
-testes/
-├── README.md
-├── matriz-testes.md
-├── contratos/
-├── integracao/
-└── end-to-end/
-```
-
-A estrutura pode evoluir conforme a necessidade real do projeto.
+Detalhes de testes específicos pertencem aos `AGENTS.md` locais ou documentação da etapa.
 
 ---
 
-# 32. Testes de contratos
+# 32. Validação
 
-A pasta:
+Uma implementação só pode ser considerada concluída após as validações relevantes.
 
-```text
-testes/contratos/
-```
-
-deve conter validações relacionadas aos contratos entre etapas.
-
-Exemplos:
-
-```text
-Bronze
-→ entrega schema compatível com Silver?
-
-Silver
-→ entrega campos e granularidade esperados pela Gold?
-
-Gold
-→ entrega contrato esperado pelo App?
-```
-
-Mudanças incompatíveis devem ser detectáveis sempre que possível.
-
----
-
-# 33. Testes de integração
-
-A pasta:
-
-```text
-testes/integracao/
-```
-
-deve ser utilizada quando a validação depender da interação entre múltiplas partes do sistema.
-
-Exemplos:
-
-* Bronze + S3;
-* Bronze → Silver;
-* Silver → Gold;
-* Gold → App;
-* componentes internos que precisam funcionar conjuntamente.
-
-Testes puramente locais devem continuar dentro da etapa responsável.
-
----
-
-# 34. Testes end-to-end
-
-A pasta:
-
-```text
-testes/end-to-end/
-```
-
-deve ser utilizada futuramente para validações do fluxo completo.
-
-Exemplo conceitual:
-
-```text
-fonte externa
-↓
-Bronze
-↓
-Silver
-↓
-Gold
-↓
-resultado final
-↓
-App
-```
-
-Não criar testes end-to-end apenas por formalidade enquanto o pipeline ainda não justificar esse nível de validação.
-
----
-
-# 35. `testes/README.md`
-
-O arquivo:
-
-```text
-testes/README.md
-```
-
-deve explicar a estratégia global de qualidade do projeto.
-
-Deve permitir compreender:
-
-* quais tipos de testes existem;
-* onde cada tipo de teste deve morar;
-* quando cada conjunto deve ser executado;
-* quais etapas possuem cobertura;
-* como interpretar falhas;
-* como executar as validações globais quando aplicável.
-
-Evitar duplicar nesse documento detalhes já existentes em `etapa/docs/testes.md`.
-
----
-
-# 36. `testes/matriz-testes.md`
-
-O arquivo:
-
-```text
-testes/matriz-testes.md
-```
-
-deve fornecer uma visão consolidada dos testes do projeto.
-
-Exemplo:
-
-```markdown
-# Matriz de Testes
-
-| Etapa | Tipo | Status | Última execução |
-| --- | --- | --- | --- |
-| Bronze | Unitário | ✅ | 12/09/2026 |
-| Bronze | Integração S3 | ✅ | 12/09/2026 |
-| Silver | dbt tests | 🚧 | - |
-| Gold | Unitário | 📋 | - |
-| App | Integração | 📋 | - |
-| Bronze → Silver | Contrato | 📋 | - |
-| Pipeline completo | End-to-End | 📋 | - |
-```
-
-A matriz é um resumo.
-
-Ela não substitui:
-
-* os testes reais;
-* `docs/testes.md`;
-* `STATUS.md`.
-
----
-
-# 37. Atualização da documentação de testes
-
-Sempre que uma alteração relevante:
-
-* criar novos testes;
-* remover testes;
-* alterar comportamento testado;
-* modificar critérios de aprovação;
-* alterar contratos entre etapas;
-* mudar cobertura relevante;
-
-verificar se é necessário atualizar:
-
-```text
-etapa/docs/testes.md
-+
-testes/matriz-testes.md
-+
-STATUS.md
-+
-CHANGELOG.md
-```
-
-Também registrar a decisão em `docs/decisoes.md` quando existir mudança relevante na estratégia de validação.
-
----
-
-# 38. Testes antes da conclusão
-
-Uma mudança de código só deve ser considerada concluída após a execução das validações relevantes disponíveis.
-
-Quando existirem:
+Podem incluir:
 
 * testes unitários;
 * testes de integração;
-* testes de contratos;
-* testes end-to-end;
+* testes de contrato;
+* smoke tests;
 * lint;
-* formatter;
 * compile;
-* dbt test;
-* dbt compile;
+* `dbt compile`;
+* `dbt test`;
+* comparação com fonte oficial;
+* validação manual.
 
-executá-los conforme o contexto.
+O Prompt Inicial deve especificar validações quando necessário.
 
-Se algum teste não puder ser realizado, informar explicitamente:
+---
 
-* qual teste não foi executado;
+# 33. Validação não executada
+
+Se uma validação necessária não puder ser realizada, informar:
+
+* qual;
 * motivo;
 * impacto;
-* necessidade de validação futura.
+* risco;
+* validação futura necessária.
 
-Nunca apresentar uma validação como concluída quando ela não tiver sido executada.
-
----
-
-# 39. Falhas de teste
-
-Uma falha de teste não deve ser ocultada apenas para concluir uma tarefa.
-
-O agente deve:
-
-1. identificar a causa;
-2. determinar se a falha foi causada pela alteração atual;
-3. corrigir quando estiver dentro do escopo;
-4. documentar limitações quando não puder corrigir;
-5. não modificar testes válidos apenas para fazer o pipeline passar.
-
-Testes não devem ser enfraquecidos sem justificativa técnica registrada.
+Nunca declarar algo como validado sem ter executado a validação correspondente.
 
 ---
 
-# 40. Erros
+# 34. Erros e falhas
 
-Não esconder falhas silenciosamente.
+Não esconder erros silenciosamente.
 
 Evitar:
 
@@ -1242,267 +838,302 @@ except Exception:
     pass
 ```
 
-Erros relevantes devem:
+Falhas devem possuir contexto e tratamento proporcional à criticidade.
 
-* ser registrados;
-* possuir contexto;
-* ser tratados de acordo com sua criticidade.
+Testes válidos não devem ser enfraquecidos apenas para obter sucesso.
 
 ---
 
-# 41. Segurança
+# 35. Dependências
+
+Não adicionar bibliotecas, frameworks, serviços ou ferramentas sem necessidade concreta.
+
+Antes de adicionar:
+
+1. verificar recursos existentes;
+2. verificar recursos nativos;
+3. avaliar manutenção;
+4. avaliar impacto;
+5. justificar quando relevante.
+
+---
+
+# 36. Segurança
 
 Nunca versionar:
 
 * `.env`;
 * credenciais AWS;
+* AWS Session Token;
 * tokens;
 * senhas;
 * API keys;
 * secrets;
 * chaves privadas.
 
-Utilizar:
+Utilizar mecanismos apropriados, como:
 
 * `.env.example`;
 * variáveis de ambiente;
-* GitHub Secrets;
-* mecanismos de autenticação adequados.
+* AWS profiles;
+* IAM;
+* GitHub Secrets.
 
 ---
 
-# 42. Dados
+# 37. Dados
 
-Não versionar datasets grandes ou dados sensíveis.
+Não versionar datasets grandes, sensíveis ou desnecessários.
 
-Evitar incluir no Git:
+Evitar no Git:
 
+* Bronze completo;
 * dumps;
-* arquivos Bronze completos;
-* artefatos binários grandes;
-* resultados intermediários volumosos;
+* caches;
+* arquivos temporários;
+* artefatos volumosos;
+* grandes Parquets;
 * modelos pesados.
 
-Dados utilizados no projeto devem possuir origem e condições de uso documentadas quando relevante.
+As fontes utilizadas devem possuir origem documentada quando relevante.
 
 ---
 
-# 43. Contratos entre etapas
-
-As etapas possuem dependências entre si.
-
-Mudanças em:
-
-```text
-Bronze
-↓
-Silver
-↓
-Gold
-↓
-App
-```
-
-podem quebrar consumidores posteriores.
+# 38. Contratos entre etapas
 
 Alterações em:
 
-* nomes de campos;
-* granularidade;
+* nomes;
 * tipos;
 * chaves;
-* schemas;
-* formatos de saída;
+* granularidade;
+* schema;
+* formato;
+* semântica;
 
-devem ser tratadas como mudanças potencialmente incompatíveis.
+podem quebrar consumidores posteriores.
 
-Essas alterações devem ser documentadas em:
-
-* documentação da etapa;
-* `decisoes.md`;
-* `CHANGELOG.md`;
-* README quando relevante;
-* testes de contrato quando aplicável.
+Não modificar contratos sem autorização adequada e validação de impacto.
 
 ---
 
-# 44. Fonte da verdade
+# 39. Pesquisa não implica implementação
 
-Nenhum arquivo deve ser considerado isoladamente como verdade absoluta.
+Uma ação de pesquisa não autoriza automaticamente implementação.
 
-A interpretação correta deve considerar:
+Exemplo:
 
 ```text
-prompt atual
-+
-AGENTS
-+
-STATUS
-+
-documentação
-+
-código
-+
-decisões
-+
-histórico
+Pesquisar APIs oficiais da ANA
 ```
 
-Entretanto, para comportamento executável, o código existente representa a verdade operacional.
-
-Se houver inconsistência, o agente deve identificar e corrigir a documentação ou implementação correspondente.
-
----
-
-# 45. Critério global de conclusão
-
-Uma tarefa relevante somente pode ser considerada concluída quando:
-
-* a implementação estiver realizada;
-* os testes relevantes tiverem sido executados;
-* o comportamento esperado tiver sido validado;
-* a documentação específica estiver atualizada;
-* `docs/testes.md` estiver atualizado quando necessário;
-* `testes/matriz-testes.md` estiver atualizado quando necessário;
-* o `STATUS.md` estiver atualizado quando necessário;
-* `docs/decisoes.md` possuir o registro correspondente;
-* o README raiz tiver sido verificado;
-* o `CHANGELOG.md` possuir a entrada apropriada;
-* limitações conhecidas estiverem documentadas;
-* nenhuma pendência estiver sendo apresentada como concluída.
-
----
-
-# 46. Filosofia documental
-
-Cada tipo de arquivo possui uma responsabilidade distinta.
+não significa:
 
 ```text
-README.md
-→ apresenta o projeto
-
-AGENTS.md
-→ define como trabalhar
-
-STATUS.md
-→ mostra onde estamos
-
-docs/
-→ explica profundamente
-
-docs/decisoes.md
-→ registra o raciocínio das escolhas
-
-docs/testes.md
-→ explica a estratégia de validação da etapa
-
-testes/matriz-testes.md
-→ mostra a visão consolidada da qualidade
-
-CHANGELOG.md
-→ registra a evolução histórica
-
-código
-→ implementa o sistema
-
-tests/
-→ valida o comportamento
-```
-
-Essa separação deve ser preservada.
-
----
-
-# 47. Filosofia de desenvolvimento
-
-A tecnologia deve seguir a necessidade.
-
-A ordem de raciocínio esperada é:
-
-```text
-problema
-↓
-requisito
-↓
-decisão
-↓
-arquitetura
-↓
-implementação
-↓
-validação
-```
-
-Evitar:
-
-```text
-tecnologia
-↓
-procurar um problema para utilizá-la
-```
-
----
-
-# 48. Regra final para agentes
-
-Antes de iniciar:
-
-```text
-Prompt
-↓
-AGENTS raiz
-↓
-AGENTS local
-↓
-STATUS
-↓
-docs necessários
-↓
-código
-↓
-decisões anteriores
-```
-
-Durante a execução:
-
-```text
-preservar
-↓
+escolher
++
 implementar
++
+alterar arquitetura
+```
+
+salvo se autorizado no Prompt Inicial.
+
+---
+
+# 40. Critério de conclusão
+
+Uma ação é concluída quando:
+
+* o objetivo do Prompt Inicial foi atendido;
+* os entregáveis existem;
+* as validações previstas foram executadas;
+* falhas relevantes foram resolvidas ou documentadas;
+* a documentação afetada está consistente;
+* o estado real está corretamente representado.
+
+Não existe obrigação de atualizar todos os documentos em toda tarefa.
+
+---
+
+# 41. Documentação proporcional
+
+A documentação deve acompanhar o impacto real.
+
+Exemplos:
+
+```text
+correção de typo
+→ sem decisão arquitetural
+```
+
+```text
+mudança da estratégia de storage
+→ decisão documentada
+```
+
+```text
+conclusão da ingestão IBGE
+→ STATUS
+→ decisão
+→ possível CHANGELOG
+→ possível README
+```
+
+---
+
+# 42. Fluxo antes da execução
+
+Antes de agir:
+
+```text
+1. Ler Prompt Inicial.
+
+2. Identificar:
+   ação
+   objetivo
+   escopo
+   autonomia
+   restrições
+   entregáveis
+   validação
+   documentação
+
+3. Ler AGENTS raiz.
+
+4. Ler AGENTS local, quando existir.
+
+5. Consultar STATUS.
+
+6. Consultar somente a documentação necessária.
+
+7. Inspecionar código relacionado.
+
+8. Consultar decisões anteriores quando relevante.
+```
+
+---
+
+# 43. Fluxo durante a execução
+
+```text
+preservar escopo
+↓
+pesquisar ou implementar
 ↓
 testar
 ↓
 validar
+↓
+identificar limitações
 ```
 
-Antes de concluir:
+Não iniciar automaticamente a próxima ação.
+
+---
+
+# 44. Fluxo após validação
+
+Quando aplicável:
 
 ```text
-documentação
+resultado validado
 ↓
-documentação de testes
+documentação específica
+↓
+decisão
 ↓
 STATUS
 ↓
-DECISÕES
-↓
-matriz de testes
+CHANGELOG
 ↓
 README
-↓
-CHANGELOG
 ```
 
-O objetivo não é apenas produzir código funcional.
+Cada atualização é condicional ao impacto real.
 
-O objetivo é manter um projeto:
+---
 
-* compreensível;
-* rastreável;
-* documentado;
-* testado;
-* consistente;
-* evolutivo;
-* tecnicamente justificável.
+# 45. Relatório final
 
-O agente deve deixar o projeto em um estado mais claro e mais confiável do que encontrou.
+Ao concluir uma tarefa relevante, informar:
+
+* o que foi feito;
+* arquivos criados;
+* arquivos alterados;
+* validações realizadas;
+* testes executados;
+* decisões registradas;
+* limitações;
+* pendências;
+* recomendações não implementadas.
+
+Quando houver código, explicar o fluxo de forma compatível com o modo de aprendizagem.
+
+---
+
+# 46. Papel do autor
+
+O autor permanece responsável por:
+
+* definir objetivos;
+* controlar escopo;
+* aprovar mudanças relevantes;
+* compreender a arquitetura;
+* revisar decisões;
+* validar aprendizados;
+* definir a próxima ação.
+
+---
+
+# 47. Papel do agente
+
+O agente pode atuar como:
+
+* executor;
+* pesquisador;
+* revisor;
+* parceiro técnico;
+* explicador;
+* auxiliar de documentação;
+* suporte de validação.
+
+Não deve atuar como gerente autônomo do projeto sem autorização explícita.
+
+---
+
+# 48. Regra final
+
+O Prompt Inicial define:
+
+> **o que fazer agora.**
+
+O `AGENTS.md` raiz define:
+
+> **como trabalhar no projeto.**
+
+O `AGENTS.md` local define:
+
+> **como trabalhar naquela etapa.**
+
+O `STATUS.md` mostra:
+
+> **onde estamos.**
+
+A documentação explica:
+
+> **como e por que construímos.**
+
+O código mostra:
+
+> **o que realmente foi implementado.**
+
+Os testes demonstram:
+
+> **o que foi validado.**
+
+As decisões registram:
+
+> **o que foi adotado, por quê e com qual participação do autor e do agente.**
+
+O agente deve executar somente a unidade de trabalho autorizada, preservar o aprendizado do autor, validar antes de declarar conclusão e deixar o projeto mais claro e confiável do que encontrou.
