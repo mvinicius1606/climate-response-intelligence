@@ -1,4 +1,4 @@
-# Configuração descritiva; não existe executor nesta etapa.
+# Configuração de fonte utilizada pelo executor Bronze.
 # validated confirma acesso e amostra, não certifica toda a cobertura nem a versão histórica.
 source:
   id: "ibge-esgotamento"

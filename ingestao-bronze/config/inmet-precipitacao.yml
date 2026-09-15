@@ -1,6 +1,6 @@
 # O autor aceita as três lacunas A801 de 27/05/2024 às 09h, 10h e 11h UTC.
 # Preservar os bytes originais e campos vazios; não preencher, interpolar ou excluir linhas.
-# O ZIP é nacional. O padrão seleciona membros do RS para uma futura ingestão.
+# O ZIP nacional é preservado integralmente; member_pattern é descritivo e não é aplicado na Bronze.
 # A validação de conteúdo cobriu somente A801; não comprova completude das 44 estações.
 source:
   id: "inmet-precipitacao"

@@ -2,119 +2,175 @@
 
 > Dados confiáveis para uma resposta a desastres climáticos justa, transparente e orientada por evidências.
 
-Climate Response Intelligence é um projeto de portfólio e de hackathon universitário que transforma dados públicos históricos sobre desastres em informações auditáveis para a distribuição humanitária de recursos.
+Climate Response Intelligence é um projeto de portfólio e de hackathon universitário voltado ao uso de dados públicos históricos para apoiar a distribuição humanitária de recursos. Integra a Trilha 3 — **Justiça, Ética, Trabalho e Sociedade** — do hackathon *Inovação para uma Sociedade Mais Humana*.
 
-> Como dados confiáveis podem tornar a distribuição de recursos em crises climáticas mais justa, transparente e baseada em evidências?
+O recorte atual estuda as enchentes do **Rio Grande do Sul, entre 27/04 e 27/05/2024**, com dados demográficos de referência 2022 e registros oficiais do evento.
 
-O projeto integra a Trilha 3 — **Justiça, Ética, Trabalho e Sociedade** — do hackathon *Inovação para uma Sociedade Mais Humana: soluções integradas para os desafios do presente e do futuro*.
+## Sumário
 
-## O problema
+- [Problema e objetivo](#problema-e-objetivo)
+- [Estado atual](#estado-atual)
+- [Arquitetura](#arquitetura)
+- [Fontes configuradas](#fontes-configuradas)
+- [Estrutura do repositório](#estrutura-do-repositório)
+- [Como executar](#como-executar)
+- [Validação e limitações](#validação-e-limitações)
+- [Documentação e desenvolvimento](#documentação-e-desenvolvimento)
+- [Licença](#licença)
 
-O tamanho da população, sozinho, não representa adequadamente a prioridade humanitária. Um município menor pode ter maior necessidade quando há mais pessoas afetadas, maior vulnerabilidade, infraestrutura danificada, acesso limitado ou poucos recursos locais.
+## Problema e objetivo
 
-O sistema combinará esses fatores por regras explícitas e revisáveis. Ele é uma ferramenta de **apoio à decisão**, não uma autoridade autônoma: pessoas continuam responsáveis pelas decisões, as limitações das fontes permanecem visíveis e nenhuma narrativa gerada por IA pode alterar o `priority score` determinístico.
+A população de um município, isoladamente, não representa sua necessidade humanitária. Pessoas afetadas, vulnerabilidade, infraestrutura danificada e restrições de acesso também influenciam a resposta ao desastre.
 
-## Princípios orientadores
+O objetivo é construir uma base rastreável para produzir indicadores e apoiar uma priorização municipal explicável. As decisões devem permanecer sob responsabilidade humana, com regras revisáveis e limitações dos dados visíveis.
 
-- **Confiança antes da previsão:** recomendações dependem da confiabilidade dos dados de origem.
-- **Validação histórica antes da previsão futura:** reconstruir eventos conhecidos antes de criar previsões.
-- **Equidade desde a concepção:** avaliar necessidade e vulnerabilidade, não apenas população absoluta.
-- **Decisões explicáveis:** rastrear cada resultado até entradas, `quality checks`, pesos e `business rules`.
-- **IA responsável:** usar IA para explicar resultados estruturados, nunca para decidir quem recebe recursos.
-- **A tecnologia acompanha o problema:** evitar infraestrutura sem valor real para este MVP de dados estáticos.
+O desenvolvimento começa pela aquisição e preservação dos originais. Transformações, indicadores e apresentação serão construídos em unidades de trabalho posteriores.
 
-## Escopo
+## Estado atual
 
-### Phase 1 — Historical Data Quality & Decision Intelligence (v0.1)
+**Referência: 15/09/2026.**
 
-O MVP de setembro de 2026 usa dados públicos históricos, com ingestão manual, para validar a fundação de dados e produzir priorização municipal explicável.
+| Componente | Situação |
+| --- | --- |
+| Pesquisa e configuração inicial de fontes | Oito YAMLs selecionados, com evidências e limitações documentadas |
+| Implementação da ingestão Bronze | Implementada e validada por dez testes offline |
+| Carga real das oito fontes no S3 | Pendente; tentativa real interrompida por HTTP 403 na primeira fonte IBGE; nenhum upload realizado |
+| Silver — transformação e Data Quality | Planejada |
+| Gold — indicadores e apoio à decisão | Planejada |
+| App — apresentação e interação | Planejado |
+
+A implementação atual processa **oito configurações que produzem nove arquivos brutos e nove manifests**. Os testes utilizam HTTP e S3 simulados; eles não comprovam acesso ao bucket nem sucesso de uma carga real.
+
+O detalhamento está no [STATUS da Bronze](ingestao-bronze/STATUS.md).
+
+## Arquitetura
+
+A organização do projeto segue quatro etapas:
 
 ```text
-Dados públicos históricos -> S3 Bronze (raw/immutable) -> Data Profiling -> Data Quality
-    -> dbt staging/silver/gold -> Decision Engine determinístico
-    -> Explicação com IA baseada em evidências -> Interface Streamlit fina
+Fontes oficiais
+    ↓
+Bronze: aquisição e preservação dos bytes originais
+    ↓
+Silver: transformação, conformação e Data Quality [planejada]
+    ↓
+Gold: indicadores e apoio à decisão [planejada]
+    ↓
+App: apresentação e interação [planejado]
 ```
 
-Marcos:
+A Bronze implementada utiliza Python e funções simples:
 
-- core técnico pronto até **20–21 de setembro de 2026**;
-- etapa online de **21–25 de setembro de 2026**;
-- v0.1 pronta até **24 de setembro de 2026**;
-- possível etapa presencial em **1º de outubro de 2026**.
+```text
+gatilhador.py
+    ↓
+config_loader.py → YAMLs validados → dict Python
+    ↓
+extractor.py → API/JSON, ZIP ou PDF → bytes originais
+    ↓
+metadata.py → configuração + metadata da execução + SHA-256
+    ↓
+aws.py → arquivo bruto e manifest JSON no S3
+    ↓
+próxima configuração
+```
 
-A v0.1 inclui documentação das fontes, armazenamento Bronze manual e imutável, profiling reproduzível, regras de qualidade com severidade, transformações e testes dbt, dados Gold orientados à decisão, score determinístico, explicações fundamentadas e uma pequena interface de demonstração.
+As dependências são **PyYAML**, **boto3** e **python-dotenv**. O acesso HTTP utiliza a biblioteca padrão do Python.
 
-### Phase 2 — Predictive & Operational Intelligence (futuro)
+Os originais são imutáveis: o envio impede sobrescritas de objetos existentes. As chaves seguem `source.id/nome-do-arquivo`; cada original recebe um arquivo associado com sufixo `.manifest.json`.
 
-Somente depois de a Phase 1 comprovar a fundação de dados, uma fase posterior poderá incluir ingestão recorrente de dados meteorológicos, `temporal features`, previsões, monitoramento e simulação de cenários. A Phase 2 **não faz parte do MVP de setembro**.
+## Fontes configuradas
 
-### Fora do escopo da v0.1
+| Instituição | Configuração / conteúdo | Formato | Arquivos por execução |
+| --- | --- | --- | --- |
+| IBGE | População, área e densidade — SIDRA 4714 | JSON | 1 |
+| IBGE | População por idade — SIDRA 9514 | JSON | 1 |
+| IBGE | Abastecimento de água — SIDRA 6803 | JSON | 1 |
+| IBGE | Esgotamento sanitário — SIDRA 6805 | JSON | 1 |
+| IBGE | Tipo de domicílio — SIDRA 6326 | JSON | 1 |
+| INMET | Acervo anual de estações automáticas de 2024 | ZIP | 1 |
+| Governo RS | Coletivas de 09 e 10/05/2024 | PDF | 2 |
+| Governo RS / DOE | Decreto 57.614, em cópia oficial preservada pela PGM de Porto Alegre | PDF | 1 |
 
-- Kafka, Airflow, Spark, streaming, Kubernetes ou arquitetura distribuída;
-- Machine Learning preditivo e agentes autônomos;
-- autenticação, frontend React ou operação em produção;
-- ingestão Bronze automatizada.
+Os dados IBGE utilizam referência **2022**. A atualização posterior de uma tabela, inclusive em 2026, não impede seu uso histórico autorizado; ano de referência e data de atualização são informações distintas.
 
-## Arquitetura proposta
+O ZIP nacional do INMET é preservado integralmente, sem extrair CSVs ou filtrar estações na Bronze. As três medições ausentes identificadas na estação A801 foram aceitas pelo autor e devem permanecer exatamente como disponibilizadas pela fonte.
 
-| Camada | Responsabilidade |
-| --- | --- |
-| Fontes públicas | Dados históricos de desastres, demografia, vulnerabilidade, infraestrutura e geografia |
-| S3 Bronze | Cópias manuais e imutáveis, `source manifests` e checksums |
-| Profiling e Data Quality | Detectar anomalias e avaliar dimensões de qualidade |
-| dbt staging e Silver | Renomear, tipar, padronizar, validar e conformar registros |
-| Gold | Publicar indicadores por município/evento com proveniência |
-| Decision Engine | Calcular `priority score` determinístico e justificativa por fator |
-| Explicação com IA | Explicar somente o resultado estruturado recebido, com salvaguardas e grounding |
-| Streamlit | Apresentar evidências de qualidade e cenários sem conter `business logic` |
-
-Consulte [a documentação de arquitetura](docs/architecture.md) para limites e requisitos de rastreabilidade.
+ANA, S2ID e fontes logísticas adicionais não fazem parte do executor atual. Consulte o [inventário das fontes](ingestao-bronze/docs/dados-de-fonte.md) para evidências, cobertura e pendências.
 
 ## Estrutura do repositório
 
 ```text
-.
-├── app/                    # placeholder da interface fina
-├── data/                   # política de dados; datasets locais ignorados
-├── dbt/                    # placeholder do projeto dbt
-├── docs/                   # arquitetura, fontes, qualidade, backlog e decisões
-├── notebooks/profiling/    # placeholder para exploração reproduzível
-├── src/                    # data, quality, decision_engine e ai
-├── tests/                  # placeholder para testes automatizados
+climate-response-intelligence/
+├── ingestao-bronze/
+│   ├── config/             # oito YAMLs de fontes
+│   ├── src/                # configuração, extração, metadata e AWS
+│   ├── tests/              # testes offline da Bronze
+│   ├── docs/               # fontes, decisões e execução
+│   ├── gatilhador.py       # ponto de entrada
+│   ├── requirements.txt
+│   └── STATUS.md
+├── etl-silver/             # etapa planejada
+├── inteligencia-gold/      # etapa planejada
+├── app/                    # etapa planejada
+├── tests/                  # espaço para testes transversais
+├── AGENTS.md
 ├── README.md
+├── CHANGELOG.md
 └── ROADMAP.md
 ```
 
-Os diretórios contêm apenas placeholders documentais, sem implementações prematuras. Datasets grandes ou sensíveis, credenciais, artefatos gerados e profiles locais nunca devem ser versionados.
+A presença de um diretório ou placeholder não significa funcionalidade implementada.
 
-## Estado atual e próximo marco
+## Como executar
 
-**Project Foundation (11 de setembro de 2026):** estrutura, escopo, roadmap, arquitetura, framework inicial de qualidade, template de fontes e backlog priorizado estão documentados. Ainda não há comportamento implementado em dbt, IA ou Streamlit.
+A partir da raiz do repositório:
 
-1. Leia [ROADMAP.md](ROADMAP.md).
-2. Avalie fontes candidatas com [docs/data-sources.md](docs/data-sources.md).
-3. Registre proprietário, licença, data de obtenção, granularidade, chaves, cobertura, schema e limitações.
-4. Defina o primeiro `data contract` antes de enviar o original imutável ao S3 Bronze.
-5. Registre aprendizados e decisões conforme o trabalho avançar.
+```powershell
+cd ingestao-bronze
+python -m pip install -r requirements.txt
+python gatilhador.py
+```
 
-Ainda não há comando de instalação ou execução. As instruções serão adicionadas junto ao primeiro recorte executável de profiling, para que permaneçam corretas.
+A execução requer um bucket S3 existente e credenciais com permissão de escrita. A configuração é carregada do ambiente e dos arquivos `.env` locais da etapa e da raiz, sem sobrescrever variáveis já definidas no ambiente.
 
-## Critério de sucesso e salvaguardas
+São utilizados `BUCKET_BRONZE`, `AWS_REGION`, `AWS_SECRET_ACCESS_KEY` e `AWS_ACESS_KEY_ID` — esta última com a grafia existente no ambiente do projeto. O nome padrão `AWS_ACCESS_KEY_ID` também é aceito, assim como `AWS_SESSION_TOKEN`, quando necessário.
 
-Uma recomendação deve ser rastreável da explicação aos fatores determinísticos, registros Gold, transformações, resultados de qualidade e metadados da fonte original. O sistema não pode ocultar dados ausentes, apresentar prioridade como verdade objetiva nem sugerir que IA substitui julgamento humanitário.
+**Esse comando realiza downloads e uploads reais**, incluindo o ZIP completo do INMET. Para verificar o código sem esses acessos, execute os testes:
 
-## Contribuição e documentação
+```powershell
+python -B -m unittest discover -s tests -v
+```
 
-Mantenha mudanças pequenas, legíveis e ligadas ao [backlog](docs/backlog.md). Prefira soluções diretas, registre decisões relevantes em `docs/decisions/`, não versione credenciais ou datasets grandes e forneça evidências para cada critério concluído.
+Consulte [execução da ingestão Bronze](ingestao-bronze/docs/INGESTAO.md) para configuração, organização dos objetos e tratamento de falhas.
 
-- [Roadmap](ROADMAP.md)
-- [Arquitetura](docs/architecture.md)
-- [Inventário de fontes e template de contrato](docs/data-sources.md)
-- [Framework de Data Quality](docs/data-quality-framework.md)
-- [Backlog inicial](docs/backlog.md)
-- [Learning Log](docs/learning-log.md)
-- [Política de dados](data/README.md)
+## Validação e limitações
+
+Os dez testes offline verificam carregamento das fontes, dispatch dos três mecanismos, múltiplos PDFs, preservação dos bytes, SHA-256, serialização e independência do manifest, configuração AWS, propagação de erros e orquestração.
+
+Limites atuais:
+
+- A carga integrada permanece pendente: HEAD do bucket funcionou, mas a primeira fonte IBGE retornou HTTP 403 em 15/09/2026.
+- A primeira falha interrompe a execução. Não há retry HTTP automático.
+- Reexecuções verificam arquivos existentes e completam manifests ausentes quando conteúdo e configuração coincidem; divergências são bloqueadas.
+- O bruto e o manifest são enviados separadamente; uma carga parcial pode ser retomada com a metadata de recuperação armazenada no original.
+- Os arquivos ficam em memória durante o processamento de cada fonte.
+- A cobertura municipal e temporal completa do evento ainda não foi demonstrada.
+
+A Bronze preserva o conteúdo recebido, sem limpeza, preenchimento de nulos, conversão para Parquet ou cálculo de indicadores.
+
+## Documentação e desenvolvimento
+
+- [Qualidade de dados e Data Lineage](DATAQUALITY.md)
+- [Regras globais de trabalho](AGENTS.md)
+- [Regras da Bronze](ingestao-bronze/AGENTS.md)
+- [Estado atual da Bronze](ingestao-bronze/STATUS.md)
+- [Execução e validação](ingestao-bronze/docs/INGESTAO.md)
+- [Inventário de fontes e limitações](ingestao-bronze/docs/dados-de-fonte.md)
+- [Decisões da Bronze](ingestao-bronze/docs/decisoes.md)
+
+O projeto avança em pequenas unidades autorizadas, com validação e documentação proporcionais à mudança. Credenciais, datasets volumosos e artefatos gerados não devem ser versionados.
 
 ## Licença
 
-Ainda não foi escolhida uma licença de software; portanto, direitos de reutilização não estão implícitos. Cada dataset deve ter sua própria licença ou termos avaliados e documentados. A seleção da licença do repositório está no backlog.
+Ainda não foi escolhida uma licença de software. As licenças e condições de uso dos datasets devem ser avaliadas individualmente; a origem oficial não equivale à confirmação de uma licença específica.

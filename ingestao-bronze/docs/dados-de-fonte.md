@@ -13,6 +13,7 @@
 
 **Verificação:** 15/09/2026. **Janela de interesse:** 27/04/2024 a 27/05/2024, inclusive. A seleção acima permite iniciar a aquisição de recortes verificáveis, mas **não demonstra ainda a viabilidade de uma reconstrução municipal completa com antecedência temporal**. ANA, S2ID, histórico rodoviário detalhado e versões disponíveis em cada momento possuem pendências explícitas.
 
+**Atualização operacional de 15/09/2026:** a tentativa de carga real falhou com HTTP 403 na URL completa de ibge-abastecimento-agua, inclusive em segunda consulta com User-Agent explícito. As amostras históricas documentadas não comprovam disponibilidade atual dessa consulta. HEAD do bucket funcionou, mas nenhum upload foi realizado nessa execução. O executor agora valida formatos e recupera cargas parciais, com dez testes offline aprovados; detalhes em [INGESTAO.md](INGESTAO.md).
 ## Sumário
 
 1. [Escopo e método](#1-escopo-e-método)
@@ -26,7 +27,7 @@
 
 ## 1. Escopo e método
 
-Esta ação trata exclusivamente de descoberta, validação documental e por amostragem, seleção e configuração. Não foram implementados extractors, manifests, transformações, features ou targets; não houve upload ao S3 nem download integral dos acervos.
+A pesquisa inicial tratou de descoberta, validação documental e por amostragem, seleção e configuração. Em ação posterior autorizada, o executor das oito fontes foi implementado e validado por oito testes offline. Não houve carga real completa no S3. Este inventário mantém as evidências da pesquisa; implementação e limites operacionais estão em [INGESTAO.md](INGESTAO.md) e [ARCHTETURE.md](ARCHTETURE.md).
 
 Foram lidos os `AGENTS.md` da raiz e da Bronze atualizados pelo autor. No início desta rodada, `STATUS.md` não existia; `config/config.yml`, os documentos técnicos da Bronze e os arquivos Python consultados estavam vazios. Não havia documentação equivalente de fontes a consolidar. Os placeholders foram preservados.
 
@@ -59,7 +60,7 @@ Neste documento, **confirmado** significa que o acesso e o conteúdo especificad
 - **Amostra:** Porto Alegre retornou população `1332845`, área `495.390` e densidade `2690.50`. São os valores disponíveis na consulta atual.
 - **Volume:** aproximadamente 1.491 valores no RS, excluindo cabeçalho.
 - **Limitação temporal:** o descritor atual informa `DataAtualizacao=2026-05-07 16:37:12` e `DataLiberacao=2026-05-07 16:37:10`. A nota da tabela menciona revisões de 2023. Isso comprova que o ano de referência e a data da versão são coisas diferentes; não demonstra quais campos do RS mudaram.
-- **Status:** acesso, schema e amostra confirmados. Equivalência à versão acessível em abril de 2024: **NÃO CONFIRMADO**. Elegibilidade para uma simulação estrita depende dessa verificação.
+- **Status:** acesso, schema e amostra confirmados. O autor aceita a atualização em 2026 para uso histórico da referência 2022. Equivalência à versão acessível em abril de 2024: **NÃO CONFIRMADO**, sem bloquear o uso autorizado; só é necessária caso uma futura avaliação exija reproduzir a informação disponível naquele momento.
 - **Configuração:** [ibge-populacao-area.yml](../config/ibge-populacao-area.yml). Termos e preservação: seção 2.1.
 
 ### 2.3. SIDRA 9514 — população por idade
@@ -157,7 +158,7 @@ O índice contém 565 entradas, das quais 44 arquivos com prefixo `INMET_S_RS_`.
 
 **Lacunas identificadas e aceitas pelo autor:** em 27/05/2024, às `0900 UTC`, `1000 UTC` e `1100 UTC` (06h, 07h e 08h de Brasília), as linhas da estação A801 existem, mas seus campos meteorológicos estão vazios. São 741 registros com precipitação preenchida e três sem valor no recorte de 744 horas. O autor autorizou prosseguir com a fonte apesar dessas três ausências, preservando exatamente o conteúdo original do INMET.
 
-**Preservação na Bronze:** manter os bytes dos arquivos adquiridos e os campos vazios de origem, sem substituir por zero, interpolar, preencher, excluir linhas ou regravar o CSV com outra codificação, separador ou horário. A descrição das lacunas deve permanecer separada do dado bruto. A aceitação dessas três ausências não representa validação do impacto analítico final nem da completude das demais estações. Esta orientação está documentada; a ingestão ainda não foi implementada.
+**Preservação na Bronze:** manter os bytes dos arquivos adquiridos e os campos vazios de origem, sem substituir por zero, interpolar, preencher, excluir linhas ou regravar o CSV com outra codificação, separador ou horário. A descrição das lacunas deve permanecer separada do dado bruto. A aceitação dessas três ausências não representa validação do impacto analítico final nem da completude das demais estações. O executor implementado preserva o ZIP nacional integralmente, sem abrir ou regravar CSVs; a carga real permanece pendente.
 **Identificadores:** código da estação no cabeçalho e data/hora nas linhas; código IBGE municipal ausente. O nome de estação não é chave municipal. Rio, bacia e sub-bacia não constam no cabeçalho examinado.
 
 **Volume futuro:** dezenas de CSV no RS; a amostra sugere ordem de dezenas de MB descomprimidos. É estimativa, não medição de todo o conjunto. O catálogo oferece anos anteriores, mas seu conteúdo e cobertura local não foram validados.
@@ -272,9 +273,9 @@ Janelas futuras de 72h exigirão observações anteriores a 27/04; referências 
 
 Foram preparados oito YAML, um por tabela ou recurso/coletânea com mecanismo comum. `rs-coletivas.yml` reúne dois documentos da mesma série e atende a Defesa Civil e logística, evitando configurações duplicadas do mesmo arquivo.
 
-Os YAML descrevem acesso, escopo e identificação. Não contêm transformações, thresholds, joins, credenciais ou regras analíticas. `status: validated` significa validação de acesso/conteúdo no recorte deste documento, não ingestão executada ou cobertura integral. Não existe config loader ainda.
+Os YAML descrevem acesso, escopo e identificação. Não contêm transformações, thresholds, joins, credenciais ou regras analíticas. `status: validated` significa validação de acesso/conteúdo no recorte deste documento, não ingestão executada ou cobertura integral. O config loader implementado lê essas configurações e valida os mecanismos suportados antes dos acessos externos.
 
-Não foi definido `bronze_prefix`: o repositório não possui convenção implementada de storage e esse parâmetro não é necessário para localizar as fontes. O `config.yml` vazio foi preservado e não concentra as novas fontes.
+Não há parâmetro bronze_prefix nos YAMLs. A implementação usa source.id/nome-do-arquivo para o bruto e o sufixo .manifest.json para o manifest. O config.yml vazio, se existir, é ignorado pelo carregador.
 
 ### Evidências e limites dos checks
 
@@ -282,15 +283,15 @@ Não foi definido `bronze_prefix`: o repositório não possui convenção implem
 | --- | --- | --- |
 | Domínios e origem | IBGE, INMET, Governo RS, ANA e S2ID identificados em portais oficiais | Links externos dependem de vínculo institucional explícito |
 | IBGE | GET dos metadados/descritores e seleções finais limitadas a Porto Alegre: 3, 21, 18, 10 e 7 valores nas tabelas 4714, 9514, 6803, 6805 e 6326 | Não baixado o recorte completo dos municípios |
-| Datas IBGE | Descritores atuais examinados | 4714 atualizada em 2026; equivalência histórica pendente |
+| Datas IBGE | Descritores atuais examinados | 4714 atualizada em 2026; referência 2022 aceita pelo autor, sem comprovação de igualdade com versão de 2024 |
 | INMET | HEAD, Range 206, índice e CSV A801 examinados | Uma estação, 744 linhas da janela em UTC, três lacunas |
 | ANA | OpenAPI/manual e códigos oficiais; inventário respondeu 401 | Séries não acessadas |
 | RS PDFs | Conteúdo e HEAD 200 nos dois PDFs e no decreto | Cobertura pontual; captura visual das coletivas falhou |
 | Boletins HTML | Existência em conteúdo oficial indexado | Amostras retornaram 404; recuperação operacional pendente |
 | S2ID | Interface e catálogo consultados | Export e schema real não confirmados |
-| Configuração | Parsing YAML e coerência com seleção/documento verificados na entrega | Sem teste de executor inexistente |
+| Configuração | Parsing YAML e coerência com seleção/documento verificados na entrega | O executor foi posteriormente validado offline; carga real pendente |
 
-As falhas de obtenção não demonstram que a instituição perdeu o dado; apenas limitam o que esta rodada conseguiu confirmar. As verificações são documentais, HTTP e de estrutura. Não há testes unitários de ingestão a executar porque não foi criado comportamento executável.
+As falhas de obtenção não demonstram que a instituição perdeu o dado; apenas limitam o que esta rodada conseguiu confirmar. As verificações são documentais, HTTP e de estrutura. Na ação posterior de implementação, oito testes offline passaram; eles não substituem as amostras reais registradas acima nem comprovam carga integrada. Consulte [validação da implementação](INGESTAO.md#validação-e-limites).
 
 ## 8. Pendências e primeira ingestão recomendada
 
@@ -298,13 +299,13 @@ As falhas de obtenção não demonstram que a instituição perdeu o dado; apena
 | --- | --- | --- |
 | Séries ANA no evento e histórico de referência | Acesso autenticado não disponível; lacunas conhecidas | Acesso concedido pela ANA e amostras de estações, frequência, fuso e revisões |
 | Renda anterior ao evento | Divulgações localizadas são posteriores | Investigar alternativa municipal historicamente elegível em nova ação |
-| Versão 2024 da tabela 4714 | Atualização atual em 2026 | Comparar publicação arquivada oficial e notas de revisão |
+| Versão 2024 da tabela 4714, somente para simulação estrita futura | Não bloqueia o uso autorizado da referência 2022 | Comparar versões apenas se uma avaliação exigir informação disponível em 2024 |
 | Chuva nas demais estações | Apenas A801 examinada | Matriz estação/período/variável e bordas de fuso, sem assumir representatividade |
 | Impactos municipais ao longo do tempo | HTML/anexos e export S2ID não recuperados | Pequeno export real e inventário de versões dos boletins |
 | Cadeia de decretos e reconhecimento federal | Confirmado apenas 57.614 em conteúdo integral | Recuperar atos anteriores/posteriores e distinguir publicação de vigência |
 | Logística por trecho | Mapas sem histórico demonstrado | Arquivos oficiais datados ou registro de alterações do órgão |
 | Licenças específicas | Não explicitadas nos recursos examinados | Localizar termos do dataset antes de definir redistribuição |
 
-**Primeira ingestão recomendada:** SIDRA **9514**, inicialmente um município e depois RS, mantendo os grupos de idade nativos. É JSON público, usa a chave IBGE, tem volume pequeno e descritor com atualização anterior ao desastre. A tabela 4714 também é simples, mas sua versão atual exige cuidado adicional para uso point-in-time.
+**Recomendação da pesquisa inicial, substituída pela implementação autorizada das oito fontes:** SIDRA **9514**, inicialmente um município e depois RS, mantendo os grupos de idade nativos. É JSON público, usa a chave IBGE, tem volume pequeno e descritor com atualização anterior ao desastre. A tabela 4714 também é simples, mas sua versão atual exige cuidado adicional para uso point-in-time.
 
-Essa recomendação não inicia a ingestão nem autoriza a próxima unidade de trabalho. O mapeamento inicial foi realizado nos quatro domínios; a validação integral da base temporal municipal permanece pendente.
+O executor atual percorre os oito YAMLs existentes, sem reduzir automaticamente o recorte IBGE a um município. A próxima validação operacional é a carga real; nenhuma execução adicional está implícita nesta documentação. A validação integral da base temporal municipal permanece pendente. A pesquisa alternativa do histórico rodoviário aguarda confirmação do autor.

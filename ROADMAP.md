@@ -2,10 +2,12 @@
 
 Plano de entrega da primeira versão funcional em **24 de setembro de 2026**. O core técnico deve estar utilizável em 20–21 de setembro, reservando os dias finais para integração, testes, documentação e apresentação.
 
+**Atualização em 15/09/2026:** as datas abaixo preservam o plano original e não representam comprovação de entrega. A implementação Bronze das oito fontes foi validada offline; carga real e etapas seguintes permanecem pendentes. Após as correções, dez testes passaram; a tentativa real parou em HTTP 403 na primeira fonte IBGE, sem uploads. Consulte [STATUS da Bronze](ingestao-bronze/STATUS.md).
+
 ## Regras de entrega
 
 - Concluir primeiro um recorte end-to-end pequeno.
-- Armazenar manualmente e de forma imutável as fontes da Phase 1; automação não é critério de sucesso.
+- Preservar os originais de forma imutável pelo executor Bronze autorizado; a implementação não equivale a carga real validada.
 - Anexar evidências a cada trabalho concluído.
 - Manter o score determinístico e as explicações baseadas no resultado estruturado.
 - Reduzir escopo em vez de introduzir infraestrutura não planejada.
@@ -15,8 +17,8 @@ Plano de entrega da primeira versão funcional em **24 de setembro de 2026**. O 
 | Data | Marco | Entregas / critério de saída | Estado |
 | --- | --- | --- | --- |
 | 11/set | Project Foundation | Estrutura, README, arquitetura, roadmap e backlog | Concluído |
-| 12/set | Fontes e contratos | Fontes avaliadas; uma principal escolhida; granularidade, schema, chaves, licença, cobertura e limitações documentadas | Próximo |
-| 13/set | AWS Bronze | Convenção de bucket/prefix; fonte original enviada manualmente; manifest e checksum registrados | Planejado |
+| 12/set | Fontes e contratos | Fontes avaliadas; uma principal escolhida; granularidade, schema, chaves, licença, cobertura e limitações documentadas | Pesquisa inicial concluída; cobertura e licenças pendentes |
+| 13/set | AWS Bronze | Executor das oito fontes, chave por source.id, manifest e checksum; carga real no S3 | Implementação validada offline; carga real pendente |
 | 14/set | Data Profiling | Profiling Python/Pandas reproduzível de tipos, nulos, duplicatas, cardinalidade, ranges, distribuições e chaves | Planejado |
 | 15/set | Data Quality Framework | Catálogo versionado com dimensões, severidade, justificativa, tratamento e disposition | Planejado |
 | 16/set | Fundamentos de dbt | Projeto mínimo e adapter local; primeiro source e model; `source()`, `ref()`, YAML e instruções | Planejado |

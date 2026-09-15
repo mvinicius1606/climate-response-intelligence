@@ -1,5 +1,15 @@
 # Decisões técnicas da Ingestão Bronze
 
+Os registros abaixo preservam o contexto de cada ação. Decisões posteriores podem atualizar os critérios anteriores; o estado operacional atual está em [STATUS.md](../STATUS.md).
+
+## Sumário
+
+- [Seleção inicial](#seleção-inicial-de-fontes-oficiais-para-a-reconstrução-histórica-de-2024)
+- [Lacunas INMET](#aceitação-das-três-lacunas-do-inmet-com-preservação-do-original)
+- [Atualização IBGE](#uso-histórico-da-tabela-ibge-atualizada-em-2026)
+- [Implementação funcional](#implementação-funcional-das-oito-fontes-yaml)
+- [Validação e recuperação](#validação-de-formatos-e-recuperação-de-carga-parcial)
+
 ## Seleção inicial de fontes oficiais para a reconstrução histórica de 2024
 
 **Data:** 15/09/2026
@@ -82,3 +92,82 @@ Os horários foram identificados na leitura do CSV oficial e apresentados ao aut
 ### Áreas afetadas
 
 Inventário de fontes e orientação documental da configuração INMET. O estado da implementação permanece pendente.
+
+## Uso histórico da tabela IBGE atualizada em 2026
+
+**Data:** 15/09/2026
+**Status:** Validada quanto ao critério de seleção
+**Origem:** AUTOR
+**Prompt relacionado:** esclarecimento de que a atualização em 2026 é aceitável se os dados históricos estiverem presentes.
+
+### Decisão e validação
+
+Utilizar a referência 2022 da tabela 4714 já confirmada por amostra, sem exigir uma cópia publicada antes das enchentes. O ano de referência e a data de atualização continuam registrados separadamente. A autorização não comprova igualdade com a versão disponível em 2024 e não adiciona novas tabelas ao escopo.
+
+## Implementação funcional das oito fontes YAML
+
+**Data:** 15/09/2026
+**Status:** Validada offline; carga integrada no S3 pendente
+**Origem:** AUTOR + AGENTE
+**Prompt relacionado:** implementar a primeira versão funcional da Bronze somente para os oito YAMLs existentes, com funções simples e validação sem downloads grandes.
+
+### Contexto e decisão adotada
+
+A pesquisa inicial foi seguida por autorização explícita para implementar cinco fontes IBGE, uma INMET e duas RS. Essa ação substitui a recomendação anterior de implementar primeiro apenas a tabela 9514.
+
+O autor definiu a arquitetura funcional: gatilhador, config_loader, extractor, metadata e aws. Foram implementados três mecanismos compartilhados de extração, com retorno em lista de dicts. O ZIP é preservado integralmente, e o manifest reutiliza a configuração original por cópia profunda.
+
+### Por que foi feito
+
+As fontes compartilham mecanismos de acesso. Funções comuns mantêm o fluxo compreensível e evitam duplicação por YAML. HTTP utiliza urllib da biblioteca padrão; PyYAML, boto3 e python-dotenv atendem às demais responsabilidades.
+
+Sem convenção detalhada de chave preexistente, adotou-se source.id/nome-do-arquivo e o sufixo .manifest.json. A exigência de preservar originais motivou uploads condicionais, sem sobrescrita. Para APIs sem nome de arquivo JSON na URL, o nome é source.id.json.
+
+### Áreas afetadas
+
+Implementação, dependências, testes e documentação da Bronze. Nenhuma fonte nova ou etapa posterior foi implementada.
+
+### Validação
+
+Oito testes offline passaram na ação de implementação, verificando oito configurações, nove originais, 18 uploads simulados, dispatch, múltiplos recursos PDF, preservação de bytes, checksum, cópia independente e serialização do manifest, configuração AWS e propagação de falhas. Imports e suporte do SDK instalado a IfNoneMatch foram conferidos. Não houve download completo ou upload real.
+
+### Alternativas consideradas e limitações
+
+Classes por fonte, factories e services foram excluídos pelo autor. Requests não foi necessário diante do acesso HTTP disponível na biblioteca padrão. Não há retry HTTP automático, validação semântica dos arquivos ou recuperação automática de carga parcial.
+
+Os dois uploads não são transacionais. O conteúdo permanece em memória por fonte; repetir uma carga com chaves existentes falha. Essas limitações estão detalhadas em [INGESTAO.md](INGESTAO.md).
+
+### Responsabilidade da decisão
+
+O autor definiu objetivo, arquitetura, mecanismos e preservação dos originais. O agente implementou os detalhes internos, escolheu urllib e a convenção mínima de chaves dentro da autonomia concedida e realizou a validação offline. Não se registra aprovação de uma carga real que não ocorreu.
+
+## Validação de formatos e recuperação de carga parcial
+
+**Data:** 15/09/2026
+**Status:** Validada offline; integração real pendente por HTTP 403 no IBGE
+**Origem:** AUTOR + AGENTE
+**Prompt relacionado:** corrigir os problemas encontrados na vistoria e documentar conforme os AGENTS.
+
+### Contexto
+
+A vistoria demonstrou aceitação de HTML como JSON e impossibilidade de retomar um original cujo manifest falhou. O autor autorizou corrigir os pontos e realizar a validação pendente. Esta decisão atualiza os limites operacionais da primeira implementação, preservando os registros anteriores como histórico.
+
+### Decisão adotada e motivo
+
+Validar minimamente o formato sem modificar os bytes: JSON parseável e não vazio, rejeição de objetos de erro, estrutura ZIP e assinatura/terminador PDF. A validação não certifica qualidade analítica.
+
+Manter uploads condicionais. Acrescentar metadata ingestion e hash da configuração ao objeto bruto para recuperar manifests ausentes com o timestamp original e configuração compatível. Reler bruto e manifest no S3; comparar tamanho, checksum e conteúdo do manifest. Preservar pares existentes compatíveis e bloquear divergências, sem exclusão ou sobrescrita.
+
+### Validação
+
+Dez testes offline passaram. A regressão de retomada simula falha do manifest, repete com outro timestamp, confirma preservação da aquisição original e rejeita bytes diferentes. A regressão de formato rejeita HTML para os três mecanismos e JSON inválido ou de erro.
+
+HEAD do bucket configurado foi bem-sucedido. A execução real de 15/09/2026 foi interrompida no primeiro download IBGE com HTTP 403, repetido em consulta com identificação explícita do cliente. Nenhum upload foi realizado nessa execução. A integração completa não está validada.
+
+### Áreas afetadas e limites
+
+Extractor, persistência AWS, testes e documentação. Nenhum YAML de fonte, dado original ou etapa posterior foi alterado. A retomada exige bytes idênticos, metadata de recuperação e permissões de leitura. Não existe recuperação automática para originais legados sem essa metadata. Os uploads não são transacionais; a releitura aumenta tráfego e memória.
+
+### Responsabilidade da decisão
+
+O autor autorizou a correção e a documentação. O agente definiu os detalhes de validação e recuperação dentro da arquitetura funcional existente, executou os testes e relatou o bloqueio externo. Não se presume conclusão da carga real ou mudança do escopo de fontes.
