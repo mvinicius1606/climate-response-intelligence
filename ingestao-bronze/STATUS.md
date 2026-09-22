@@ -13,7 +13,7 @@
 | Série logística por trecho e publicação | PENDENTE | Evidências pontuais confirmadas; histórico completo de mapas não demonstrado |
 | Implementação das oito fontes YAML | CONCLUÍDO | Dez testes offline aprovados; nove arquivos e 18 uploads simulados |
 | Carga real IBGE / INMET / RS no S3 | PENDENTE | HEAD do bucket bem-sucedido; execução real interrompida por HTTP 403 na primeira fonte IBGE, sem uploads |
-| Ingestão ANA | PENDENTE | Fora do escopo desta implementação |
+| Ingestão ANA | PENDENTE | Mantida como fonte pendente; descartada do uso imediato como dado validado da enchente do RS |
 | Ingestão S2ID | PENDENTE | Fora do escopo desta implementação |
 | Logística adicional | PENDENTE | Fora do escopo; pesquisa alternativa depende de autorização do autor |
 

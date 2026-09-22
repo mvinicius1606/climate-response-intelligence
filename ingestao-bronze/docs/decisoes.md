@@ -10,6 +10,55 @@ Os registros abaixo preservam o contexto de cada ação. Decisões posteriores p
 - [Implementação funcional](#implementação-funcional-das-oito-fontes-yaml)
 - [Validação e recuperação](#validação-de-formatos-e-recuperação-de-carga-parcial)
 
+## ANA mantida como fonte pendente e descartada do uso imediato
+
+**Data:** 22/09/2026
+
+**Status:** Validada
+
+**Origem:** AUTOR + AGENTE
+
+**Prompt relacionado:** “manter a ANA apenas como fonte pendente e descartar seu uso imediato para a enchente do RS enquanto a série histórica não for validada.”
+
+### Contexto
+
+A ANA respondeu com autenticação válida e com inventário de estações no RS, mas a investigação não conseguiu demonstrar série histórica confiável para a janela 27/04/2024 a 27/05/2024. O retorno observado consistiu em metadados de estação, não em chuva, nível ou vazão do evento. A fonte continua relevante como catálogo da rede hidrometeorológica, mas não é adequada para uso analítico imediato no projeto.
+
+### O que foi feito
+
+- validamos a autenticação da API da ANA;
+- consultamos o inventário de estações do RS;
+- testamos as rotas de série histórica de chuva, cota e vazão;
+- confirmamos que os retornos relevantes para o projeto não produziram dados válidos para o período solicitado;
+- registramos esse resultado documentando a ANA como fonte pendente e não validada.
+
+### Decisão adotada
+
+1. Manter a ANA como fonte pendente no projeto.
+2. Descartar o uso imediato da ANA para a reconstrução da enchente do RS até que a série histórica da janela solicitada seja validada.
+3. Usar o inventário apenas como catálogo de estação e como insumo para futuras investigações pontuais, não como dado analítico.
+4. Não incluir dados ANA na base do MVP enquanto não houver confirmação real da série histórica do período.
+
+### Por que foi feito
+
+A ANA constitui uma fonte potencial para monitoramento hidrológico, mas a evidência atual não sustenta uso como dado oficial da enchente. O que foi obtido foi uma rede de estações e datas de atualização, e não a medição do evento. Essa distinção é decisiva para evitar construir uma base com dados incompletos ou indevidamente interpretados.
+
+### Áreas afetadas
+
+Documentação da Bronze, inventário de fontes, status da implementação e decisão operacional sobre fontes de dados. Nenhum contrato de Silver/Gold foi alterado.
+
+### Validação
+
+A validação foi feita diretamente nas respostas reais da API da ANA: autenticação 200 OK; inventário de RS retornou 27 itens; rotas de série histórica não produziriam registros confiáveis para 27/04 a 27/05/2024 no contexto da demanda do projeto.
+
+### Limitações
+
+A ANA continua sendo uma fonte potencial e pode ser revisitada em uma próxima investigação com filtros e endpoints específicos. Porém, no estado atual, não há evidência suficiente para incorporá-la ao fluxo analítico do projeto.
+
+### Responsabilidade da decisão
+
+O autor autorizou a manutenção da fonte em estado de investigação. O agente executou a validação e documentou a não-aptidão imediata do dado para a enchente do RS. A origem AUTOR + AGENTE representa essa divisão clara de responsabilidade.
+
 ## Seleção inicial de fontes oficiais para a reconstrução histórica de 2024
 
 **Data:** 15/09/2026

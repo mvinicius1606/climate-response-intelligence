@@ -128,9 +128,13 @@ A [listagem oficial de características dos domicílios](https://sidra.ibge.gov.
 
 **Acesso documentado:** API REST/JSON autenticada. O manual exige cadastro solicitado à ANA. A consulta pública de inventário para `87450004` retornou HTTP 401, sem dados. Nenhuma credencial foi procurada ou inserida.
 
+**Decisão de projeto:** a ANA foi mantida apenas como fonte pendente e foi **descartada do uso imediato como dado validado da enchente do RS**. O inventário da rede e os metadados de estação podem ser usados como catálogo de cobertura, mas não como evidência operacional da série histórica do evento. A coleta da série de chuva, cota e vazão exige validação real de endpoint, filtros e janela temporal antes de entrar na base do projeto.
+
 **Schema documentado:** código e nome de estação, coordenadas, área de drenagem, bacia, município e datas de operação; nas séries adotadas, chuva em mm, cota em cm, vazão em m³/s, flags de qualidade, `Data_Hora_Medicao` e `Data_Atualizacao`. O `Municipio_Codigo` do Hidro **não é código IBGE**. O exemplo do manual é de outra região; não valida cobertura do RS.
 
 O Swagger anuncia inventário, rios, bacias e sub-bacias; séries convencionais de chuva/cotas/vazão e séries telemétricas adotadas/detalhadas. A versão v1 limita séries telemétricas a 30 dias por consulta e convencionais a 366; v2 anuncia consulta adotada para até dez estações. Essas rotas foram verificadas no OpenAPI, sem executar séries. O limite de busca não prova frequência de medição.
+
+**Status operacional:** as estações identificadas no inventário não constituem dados da enchente; servem apenas para mapear a rede disponível e para decidir se vale a investigação de um caso específico. Enquanto a série histórica da janela 27/04 a 27/05/2024 não for validada, a ANA continua **pendente** e **descartada do uso analítico imediato**.
 
 **Cobertura do evento:** a [comunicação da ANA de 07/05/2024](https://www.gov.br/ana/pt-br/assuntos/noticias-e-eventos/noticias/ana-divulga-dados-de-monitoramento-de-niveis-de-agua-do-lago-guaiba-do-rio-uruguai-e-da-lagoa-dos-patos-rs) identifica Cais Mauá C6 (`87450004`), Arambaré (`87540000`), Laranjal (`87955000`), Rio Grande/Regatas (`87980000`) e São Lourenço (`87921000`). Informa disponibilização horária no Guaíba e início de disponibilização de quatro estações da lagoa dos Patos em 05/05. Também registra interrupções em sete estações das bacias Taquari-Antas e Caí.
 
