@@ -2,7 +2,7 @@
 
 > Dados confiáveis para uma resposta a desastres climáticos justa, transparente e orientada por evidências.
 
-Climate Response Intelligence é um projeto de portfólio e de hackathon universitário voltado ao uso de dados públicos históricos para apoiar a distribuição humanitária de recursos. Integra a Trilha 3 — **Justiça, Ética, Trabalho e Sociedade** — do hackathon *Inovação para uma Sociedade Mais Humana*.
+Climate Response Intelligence é um projeto de portfólio que explora como dados públicos históricos podem apoiar uma resposta a desastres climáticos mais justa, transparente e orientada por evidências.
 
 O recorte atual estuda as enchentes do **Rio Grande do Sul, entre 27/04 e 27/05/2024**, com dados demográficos de referência 2022 e registros oficiais do evento.
 
@@ -28,18 +28,17 @@ O desenvolvimento começa pela aquisição e preservação dos originais. Transf
 
 ## Estado atual
 
-**Referência: 15/09/2026.**
+**Referência: 02/10/2026.**
 
 | Componente | Situação |
 | --- | --- |
 | Pesquisa e configuração inicial de fontes | Oito YAMLs selecionados, com evidências e limitações documentadas |
-| Implementação da ingestão Bronze | Implementada e validada por dez testes offline |
-| Carga real das oito fontes no S3 | Pendente; tentativa real interrompida por HTTP 403 na primeira fonte IBGE; nenhum upload realizado |
-| Silver — transformação e Data Quality | Planejada |
+| Etapa de ingestão Bronze | Implementação concluída e validada por dez testes offline; carga real no S3 ainda não comprovada |
+| Silver — transformação e Data Quality | Em preparação documental; implementação ainda não iniciada |
 | Gold — indicadores e apoio à decisão | Planejada |
 | App — apresentação e interação | Planejado |
 
-A implementação atual processa **oito configurações que produzem nove arquivos brutos e nove manifests**. Os testes utilizam HTTP e S3 simulados; eles não comprovam acesso ao bucket nem sucesso de uma carga real.
+A implementação da Bronze processa **oito configurações que produzem nove arquivos brutos e nove manifests** numa execução completa. Os testes utilizam HTTP e S3 simulados; eles não comprovam acesso ao bucket nem sucesso de uma carga real. O último registro operacional disponível relata HTTP 403 na primeira fonte IBGE, sem uploads.
 
 O detalhamento está no [STATUS da Bronze](ingestao-bronze/STATUS.md).
 
@@ -52,7 +51,7 @@ Fontes oficiais
     ↓
 Bronze: aquisição e preservação dos bytes originais
     ↓
-Silver: transformação, conformação e Data Quality [planejada]
+Silver: transformação, conformação e Data Quality [próxima etapa]
     ↓
 Gold: indicadores e apoio à decisão [planejada]
     ↓
@@ -110,7 +109,7 @@ climate-response-intelligence/
 │   ├── gatilhador.py       # ponto de entrada
 │   ├── requirements.txt
 │   └── STATUS.md
-├── etl-silver/             # etapa planejada
+├── etl-silver/             # documentação inicial da próxima etapa
 ├── inteligencia-gold/      # etapa planejada
 ├── app/                    # etapa planejada
 ├── tests/                  # espaço para testes transversais
@@ -165,6 +164,8 @@ A Bronze preserva o conteúdo recebido, sem limpeza, preenchimento de nulos, con
 - [Regras globais de trabalho](AGENTS.md)
 - [Regras da Bronze](ingestao-bronze/AGENTS.md)
 - [Estado atual da Bronze](ingestao-bronze/STATUS.md)
+- [Estado e escopo inicial da Silver](etl-silver/STATUS.md)
+- [Orientações iniciais da Silver](etl-silver/ETL.md)
 - [Execução e validação](ingestao-bronze/docs/INGESTAO.md)
 - [Inventário de fontes e limitações](ingestao-bronze/docs/dados-de-fonte.md)
 - [Decisões da Bronze](ingestao-bronze/docs/decisoes.md)

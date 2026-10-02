@@ -27,7 +27,7 @@
 
 ## 1. Escopo e método
 
-A pesquisa inicial tratou de descoberta, validação documental e por amostragem, seleção e configuração. Em ação posterior autorizada, o executor das oito fontes foi implementado e validado por oito testes offline. Não houve carga real completa no S3. Este inventário mantém as evidências da pesquisa; implementação e limites operacionais estão em [INGESTAO.md](INGESTAO.md) e [ARCHTETURE.md](ARCHTETURE.md).
+A pesquisa inicial tratou de descoberta, validação documental e por amostragem, seleção e configuração. Em ação posterior autorizada, o executor das oito fontes foi implementado e validado por dez testes offline. Não houve carga real completa no S3 na tentativa registrada. Este inventário mantém as evidências da pesquisa; implementação e limites operacionais estão em [INGESTAO.md](INGESTAO.md) e [ARCHTETURE.md](ARCHTETURE.md).
 
 Foram lidos os `AGENTS.md` da raiz e da Bronze atualizados pelo autor. No início desta rodada, `STATUS.md` não existia; `config/config.yml`, os documentos técnicos da Bronze e os arquivos Python consultados estavam vazios. Não havia documentação equivalente de fontes a consolidar. Os placeholders foram preservados.
 

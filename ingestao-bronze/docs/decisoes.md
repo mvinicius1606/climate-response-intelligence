@@ -9,6 +9,7 @@ Os registros abaixo preservam o contexto de cada ação. Decisões posteriores p
 - [Atualização IBGE](#uso-histórico-da-tabela-ibge-atualizada-em-2026)
 - [Implementação funcional](#implementação-funcional-das-oito-fontes-yaml)
 - [Validação e recuperação](#validação-de-formatos-e-recuperação-de-carga-parcial)
+- [Reposicionamento e transição para Silver](#reposicionamento-como-portfólio-e-início-da-silver)
 
 ## ANA mantida como fonte pendente e descartada do uso imediato
 
@@ -220,3 +221,29 @@ Extractor, persistência AWS, testes e documentação. Nenhum YAML de fonte, dad
 ### Responsabilidade da decisão
 
 O autor autorizou a correção e a documentação. O agente definiu os detalhes de validação e recuperação dentro da arquitetura funcional existente, executou os testes e relatou o bloqueio externo. Não se presume conclusão da carga real ou mudança do escopo de fontes.
+
+## Reposicionamento como portfólio e início da Silver
+
+**Data:** 02/10/2026
+**Status:** Validada
+**Origem:** AUTOR
+
+### Contexto
+
+Documentos ainda descreviam o projeto em contexto de hackathon e mantinham um cronograma com datas de setembro de 2026. A implementação da Bronze estava concluída e a próxima etapa do projeto passou a ser a preparação da Silver.
+
+### O que foi feito
+
+O posicionamento foi alinhado a um projeto de portfólio, o roadmap foi convertido em sequência de etapas sem datas fixas e foram criadas orientações e status iniciais para a Silver.
+
+### Decisão adotada
+
+O projeto será apresentado como portfólio técnico. A Bronze é considerada concluída quanto à implementação e validação offline. A carga real no S3 permanece uma pendência operacional explícita, sem ser declarada como realizada. A Silver inicia pela confirmação dos artefatos disponíveis e pela definição de contratos com base na inspeção dos dados; nenhuma ferramenta ou regra de transformação foi escolhida nesta ação.
+
+### Áreas afetadas
+
+README, roadmap, changelog, documentação de qualidade, status da Bronze, documentação de fontes e documentação/status inicial da Silver.
+
+### Validação
+
+Os documentos foram revisados contra as evidências existentes da Bronze: dez testes offline aprovados e tentativa de carga real interrompida por HTTP 403, sem uploads. A busca no README e no roadmap não encontrou referências ao enquadramento de hackathon ou ao cronograma antigo; `git diff --check` passou.

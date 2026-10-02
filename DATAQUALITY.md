@@ -19,12 +19,12 @@ A Bronze fornece a base dessa rastreabilidade: conserva os originais e registra 
 
 | Etapa | Responsabilidade | Estado |
 | --- | --- | --- |
-| Bronze | Preservar originais e registrar origem, configuração, obtenção, tamanho, checksum e destino | Implementada e validada offline; carga real pendente |
-| Silver | Avaliar tipos, chaves, duplicatas, ausências, consistência e relações entre fontes; documentar tratamentos | Planejada |
+| Bronze | Preservar originais e registrar origem, configuração, obtenção, tamanho, checksum e destino | Implementação concluída e validada offline; carga real no S3 ainda não comprovada |
+| Silver | Avaliar tipos, chaves, duplicatas, ausências, consistência e relações entre fontes; documentar tratamentos | Em preparação documental; implementação não iniciada |
 | Gold | Relacionar indicadores às entradas, regras e versões de cálculo | Planejada |
 | App | Apresentar resultados com evidências e limitações compreensíveis | Planejado |
 
-Detalhes técnicos específicos permanecem na [arquitetura da Bronze](ingestao-bronze/docs/ARCHTETURE.md). Esta documentação não implementa regras de qualidade ou contratos nas etapas futuras.
+Detalhes técnicos específicos permanecem na [arquitetura da Bronze](ingestao-bronze/docs/ARCHTETURE.md). A etapa Silver começa pela inspeção dos artefatos de entrada disponíveis e pela definição de contratos e critérios de qualidade. Esta documentação geral não fixa regras de qualidade ou contratos executáveis para ela; consulte as [orientações iniciais](etl-silver/ETL.md).
 
 ## Controles atuais e evidências
 

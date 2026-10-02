@@ -1,6 +1,8 @@
 # Estado atual — Ingestão Bronze
 
-**Atualizado em:** 15/09/2026.
+**Atualizado em:** 02/10/2026.
+
+**Estado da etapa:** implementação concluída e validada offline. A carga real no S3 continua sem comprovação e não é apresentada como realizada.
 
 | Componente | Estado | Evidência / limite |
 | --- | --- | --- |
@@ -26,6 +28,6 @@
 
 O fluxo funcional está implementado em gatilhador.py, config_loader.py, extractor.py, metadata.py e aws.py. Validação offline não equivale a carga real no S3. Consulte [execução e limites](docs/INGESTAO.md).
 
-## Próxima ação recomendada
+## Próxima etapa
 
-A próxima unidade pode validar a carga real e as permissões do bucket. A tentativa real falhou no acesso IBGE; é necessário resolver o HTTP 403 antes de repetir. As pendências e seus critérios de validação estão no [inventário](docs/dados-de-fonte.md#8-pendências-e-primeira-ingestão-recomendada).
+A próxima etapa do projeto é a Silver. Antes de transformar dados, confirmar a localização e disponibilidade dos artefatos Bronze que serão usados e definir um primeiro recorte de trabalho. A pendência operacional da carga real no S3 permanece registrada acima e em [execução e limites](docs/INGESTAO.md); ela não altera o estado dos testes offline nem deve ser ocultada.

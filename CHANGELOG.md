@@ -1,5 +1,11 @@
 # Changelog
 
+## 02/10/2026 — Reposicionamento e início documental da Silver
+
+- Alinhado o README ao projeto de portfólio e removido o cronograma associado à entrega de hackathon.
+- Registrada a conclusão da implementação Bronze com a pendência da carga real no S3 preservada.
+- Iniciadas as orientações e o status da Silver, sem antecipar ferramenta, formato ou regras de transformação.
+
 ## 15/09/2026 — Correções após vistoria da Bronze
 
 - Rejeição de respostas incompatíveis com JSON, ZIP e PDF sem transformação do original.
